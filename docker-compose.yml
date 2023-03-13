@@ -1,0 +1,13 @@
+version: "3"
+services:
+  app:
+    image: alexandersus/nodejs-airport:v1
+    container_name: nodejs-airport 
+    build: .
+    ports:
+      - ${APP_PORT}:${APP_PORT}
+    volumes:
+      - .:/app
+    env_file: 
+    - .env
+    restart: unless-stopped
