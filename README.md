@@ -2,29 +2,41 @@
 
 ### Install
 Clone this repo with command
-```git clone git@github.com:AlexanderSUS/nodejs-airport.git ```
+```sh
+git clone git@github.com:AlexanderSUS/nodejs-airport.git
+```
 
  Go to project folder
-```cd nodejs-airport```
+```sh
+cd nodejs-airport
+```
 
 Install dependencies
-```npm install```
+```sh
+npm install
+```
 
 ### Run in docker container
 For running application in Docker container you should have docker installed on your system
 
 Run app
-```docker compose up```
+```sh
+docker compose up
+```
 
 Stop app
-```docker compose down```
+```sh
+docker compose down
+```
 
 ### Run as is
 Run command
-```node index.js```
+```sh
+node index.js
+```
 
-Application will running on 0.0.0.0:4000 
+#### Application will running on 0.0.0.0:4000 
 
 ### API
-- Method GET '/'
-  Response: 'Hello world'
+Method GET '/'
+- Response: 'Hello world'
