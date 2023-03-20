@@ -3,13 +3,14 @@
 ## Table of contents
 
 1. [Installation](#installation)
-2. [API](#api)
+2. [Run](#run)
+3. [API](#api)
 	- [Test route](#test-route)
 	- [Flights](#flights)
 	- [Terminals](#terminals)
 	- [Employee](#employee)
 
-### Installation
+## Installation
 Clone this repo with command
 ```sh
 git clone git@github.com:AlexanderSUS/nodejs-airport.git
@@ -25,15 +26,23 @@ Install dependencies
 npm install
 ```
 
-### Run in docker container
+## Run
+
+### Run in docker 
 For running application in Docker container you should have docker installed on your system
 
-Run app
+Run application
 ```sh
 docker compose up
 ```
 
-Stop app
+Run application in detached mode
+```sh
+docker compose up -d
+```
+
+
+Stop application
 ```sh
 docker compose down
 ```
@@ -46,59 +55,38 @@ node index.js
 
 **Server will started on 0.0.0.0:4000**
 
-**URL:** <http://localhost:4000>
-
+**URL** <http://localhost:4000>
 
 ### API
-- airport (terminals, employees, flight tickets, etc.), question: I buy a ticket from point A to point B, how to get there, how much will it cost, if there are no direct flights, then also say about it
 
 #### Test route
 | `GET`  **/**     | Return test string |
 | :---             | :---- |
 | Code             | 200 |
+| Media type | |
 | Parameters | |
 | Response         | 'Hello world' |
 
+---
 
 #### Flights
-| `GET`  **/flights**     | Return all flights |
-| :---             | :---- |
-| Code             | 200 |
-| Parameters | 'from', 'to', 'departureTerminal', 'arrivalTerminal'   |
-|Response  | 
-```javascript
-	[{
-		id: 742,
-		flight: 'B481',
-		from: 'Minks-1',
-		to: 'Domodedovo',
-		departureTime: '16/03/2023 17:44',
-		arrivalTime: '16/03/2023 18:42',
-		departureTerminal: 'B',
-		arrivalTerminal: 'E',
-		seats: [{
-			seat: 'A23';
-			isBusinessClass: false;
-			isNearWindow: true;
-			cost: 200;
-			isAvailable: true;
-		}],
-	}]
-```
 
-| `GET`  **/flights/{flightId}**     | Return flights by id |
-| :---             | :---- |
+| `GET`  /flights/{flightId}     | Return flight by id |
+| ---             | ---- |
 | Code             | 200 |
-| Parameters | 'from', 'to', 'departureTerminal', 'arrivalTerminal'   |
-|Response  | 
+| Parameters |    |
+| Media type | application/json |
+Response body: 
 ```javascript
-	[{
+	{
 		id: 742,
 		flight: 'B481',
 		from: 'Minks-1',
 		to: 'Domodedovo',
-		departureTime: '16/03/2023 17:44',
-		arrivalTime: '16/03/2023 18:42',
+		departureDate: '16/03/2023',
+		departureTime: '17:44',
+		arrivalDate: '16/03/2023',
+		arrivalTime: '18:42',
 		departureTerminal: 'B',
 		arrivalTerminal: 'E',
 		seats: [{
@@ -106,33 +94,35 @@ node index.js
 			isBusinessClass: false;
 			isNearWindow: true;
 			cost: 200;
-			isAvailable: true;
+			passenger: null
 		}],
-	}]
+	}
 ```
 | Code             | 404 |
 | :---             | :---- |
-|Response  | 
+| Media type | application/json |
+Response body
 ```javascript
   { 
     message: 'Flight not found',
   }
 ```
 
-
-| `PUT`  **/flights/{flightId}**     | Update flight |
+| `POST`  /flights     | Create flight |
 | :---             | :---- |
-| Code             | 200 |
-| Parameters | 'from', 'to', 'departureTerminal', 'arrivalTerminal'   |
-|Response  | 
+| Code             | 201 |
+| Media type | application/json |
+
+Request body:
 ```javascript
-	[{
-		id: 742,
+	{
 		flight: 'B481',
 		from: 'Minks-1',
 		to: 'Domodedovo',
-		departureTime: '16/03/2023 17:44',
-		arrivalTime: '16/03/2023 18:42',
+		departureDate: '16/03/2023',
+		departureTime: '17:44',
+		arrivalDate: '16/03/2023',
+		arrivalTime: '18:42',
 		departureTerminal: 'B',
 		arrivalTerminal: 'E',
 		seats: [{
@@ -140,16 +130,250 @@ node index.js
 			isBusinessClass: false;
 			isNearWindow: true;
 			cost: 200;
-			isAvailable: true;
+			passenger: null
+		}],
+	}
+
+```
+Response body: 
+```javascript
+	{
+		id: 742,
+		flight: 'B481',
+		from: 'Minks-1',
+		to: 'Domodedovo',
+		departureDate: '16/03/2023',
+		departureTime: '17:44',
+		arrivalDate: '16/03/2023',
+		arrivalTime: '18:42',
+		departureTerminal: 'B',
+		arrivalTerminal: 'E',
+		seats: [{
+			seat: 'A23';
+			isBusinessClass: false;
+			isNearWindow: true;
+			cost: 200;
+			passenger: null
+		}],
+	}
+```
+| Code             | 400 |
+| :---             | :---- |
+| Media type | application/json |
+Response body
+```javascript
+  { 
+    message: 'Flight number already exist',
+  }
+```
+
+
+| `PATCH`  /flights/{flightId}     | Update flight |
+| :---             | :---- |
+| Code             | 200 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+	{
+		flight: 'B481',
+		from: 'Minks-1',
+		to: 'Domodedovo',
+		departureDate: '16/03/2023',
+		departureTime: '17:44',
+		arrivalDate: '16/03/2023',
+		arrivalTime: '18:42',
+		departureTerminal: 'B',
+		arrivalTerminal: 'E',
+		seats: [{
+			seat: 'A23';
+			isBusinessClass: false;
+			isNearWindow: true;
+			cost: 200;
+			passenger: null
+		}],
+	}
+
+```
+
+Response body:
+```javascript
+	[{
+		id: 742,
+		flight: 'B481',
+		from: 'Minks-1',
+		to: 'Domodedovo',
+		departureDate: '16/03/2023',
+		departureTime: '17:44',
+		arrivalDate: '16/03/2023',
+		arrivalTime: '18:42',
+		departureTerminal: 'B',
+		arrivalTerminal: 'E',
+		seats: [{
+			seat: 'A23';
+			isBusinessClass: false;
+			isNearWindow: true;
+			cost: 200;
+			passenger: null
 		}],
 	}]
 ```
 
+| Code             | 400 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'reason',
+  }
+```
+
 | Code             | 404 |
 | :---             | :---- |
-|Response  | 
+| Media type | application/json |
+Response body:
 ```javascript
   { 
     message: 'Flight not found',
   }
 ```
+
+| `DELETE`  /flights/{flightId}     | Update flight |
+| :---             | :---- |
+| Code             | 204 |
+| Media type |  |
+Response body:
+
+| Code             | 404 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'Flight not found',
+  }
+```
+---
+
+???????????????????
+#### Path
+
+| `GET`  /path     | get all |
+| :---             | :---- |
+| Code             | 200 |
+| Parameters |  PARAMS!!!!!!!!   |
+| Media type | application/json |
+
+Response body:
+```javascript
+	[{
+	}]
+```
+
+| `GET`  /path/{pathId}     | get by id|
+| :---             | :---- |
+| Code             | 200 |
+| Parameters |    |
+| Media type | application/json |
+
+Response body:
+```javascript
+	[{
+	}]
+```
+
+| Code             | 404 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: '???????? not found',
+  }
+```
+
+| `POST`  /path/{pathIdId}     | create ???|
+| :---             | :---- |
+| Code             | 201 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+	[{
+	}],
+
+```
+
+Response body:
+```javascript
+	[{
+	}]
+```
+
+| Code             | 400 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'reason',
+  }
+```
+
+| `PATCH`  /path/{pathIdId}     | update ??? |
+| :---             | :---- |
+| Code             | 201 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+	[{
+	}],
+
+```
+
+Response body:
+```javascript
+	[{
+	}]
+```
+
+| Code             | 400 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'reason',
+  }
+```
+| Code             | 404 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: '???????? not found',
+  }
+```
+
+| `DELETE`  /????s/{????Id}     | Update ???? |
+| :---             | :---- |
+| Code             | 204 |
+| Media type |  |
+Response body: no content
+
+| Code             | 404 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: '????? not found',
+  }
+```
+---
