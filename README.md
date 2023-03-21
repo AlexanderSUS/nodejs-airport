@@ -78,25 +78,25 @@ node index.js
 | Media type | application/json |
 Response body: 
 ```javascript
-	{
-		id: 742,
-		flight: 'B481',
-		from: 'Minks-1',
-		to: 'Domodedovo',
-		departureDate: '16/03/2023',
-		departureTime: '17:44',
-		arrivalDate: '16/03/2023',
-		arrivalTime: '18:42',
-		departureTerminal: 'B',
-		arrivalTerminal: 'E',
-		seats: [{
-			seat: 'A23';
-			isBusinessClass: false;
-			isNearWindow: true;
-			cost: 200;
-			passenger: null
-		}],
-	}
+  {
+    id: 742,
+    flight: 'B481',
+    from: 'Minks-1',
+    to: 'Domodedovo',
+    departureDate: '16/03/2023',
+    departureTime: '17:44',
+    arrivalDate: '16/03/2023',
+    arrivalTime: '18:42',
+    departureTerminal: 'B',
+    arrivalTerminal: 'E',
+    seats: [{
+      seat: 'A23';
+      isBusinessClass: false;
+      isNearWindow: true;
+      cost: 200;
+      passenger: null
+    }]
+  }
 ```
 | Code             | 404 |
 | :---             | :---- |
@@ -104,7 +104,7 @@ Response body:
 Response body
 ```javascript
   { 
-    message: 'Flight not found',
+    message: 'Flight not found'
   }
 ```
 
@@ -115,47 +115,47 @@ Response body
 
 Request body:
 ```javascript
-	{
-		flight: 'B481',
-		from: 'Minks-1',
-		to: 'Domodedovo',
-		departureDate: '16/03/2023',
-		departureTime: '17:44',
-		arrivalDate: '16/03/2023',
-		arrivalTime: '18:42',
-		departureTerminal: 'B',
-		arrivalTerminal: 'E',
-		seats: [{
-			seat: 'A23';
-			isBusinessClass: false;
-			isNearWindow: true;
-			cost: 200;
-			passenger: null
-		}],
-	}
+  {
+    flight: 'B481',
+    from: 'Minks-1',
+    to: 'Domodedovo',
+    departureDate: '16/03/2023',
+    departureTime: '17:44',
+    arrivalDate: '16/03/2023',
+    arrivalTime: '18:42',
+    departureTerminal: 'B',
+    arrivalTerminal: 'E',
+    seats: [{
+      seat: 'A23';
+      isBusinessClass: false;
+      isNearWindow: true;
+      cost: 200;
+      passenger: null
+    }]
+  }
 
 ```
 Response body: 
 ```javascript
-	{
-		id: 742,
-		flight: 'B481',
-		from: 'Minks-1',
-		to: 'Domodedovo',
-		departureDate: '16/03/2023',
-		departureTime: '17:44',
-		arrivalDate: '16/03/2023',
-		arrivalTime: '18:42',
-		departureTerminal: 'B',
-		arrivalTerminal: 'E',
-		seats: [{
-			seat: 'A23';
-			isBusinessClass: false;
-			isNearWindow: true;
-			cost: 200;
-			passenger: null
-		}],
-	}
+  {
+    id: 742,
+    flight: 'B481',
+    from: 'Minks-1',
+    to: 'Domodedovo',
+    departureDate: '16/03/2023',
+    departureTime: '17:44',
+    arrivalDate: '16/03/2023',
+    arrivalTime: '18:42',
+    departureTerminal: 'B',
+    arrivalTerminal: 'E',
+    seats: [{
+    seat: 'A23';
+      isBusinessClass: false;
+      isNearWindow: true;
+      cost: 200;
+      passenger: null
+    }]
+  }
 ```
 | Code             | 400 |
 | :---             | :---- |
@@ -163,7 +163,7 @@ Response body:
 Response body
 ```javascript
   { 
-    message: 'Flight number already exist',
+    message: 'Flight number already exist'
   }
 ```
 
@@ -176,48 +176,47 @@ Response body
 
 Request body:
 ```javascript
-	{
-		flight: 'B481',
-		from: 'Minks-1',
-		to: 'Domodedovo',
-		departureDate: '16/03/2023',
-		departureTime: '17:44',
-		arrivalDate: '16/03/2023',
-		arrivalTime: '18:42',
-		departureTerminal: 'B',
-		arrivalTerminal: 'E',
-		seats: [{
-			seat: 'A23';
-			isBusinessClass: false;
-			isNearWindow: true;
-			cost: 200;
-			passenger: null
-		}],
-	}
-
+  {
+    flight: 'B481',
+    from: 'Minks-1',
+    to: 'Domodedovo',
+    departureDate: '16/03/2023',
+    departureTime: '17:44',
+    arrivalDate: '16/03/2023',
+    arrivalTime: '18:42',
+    departureTerminal: 'B',
+    arrivalTerminal: 'E',
+    seats: [{
+      seat: 'A23';
+      isBusinessClass: false;
+      isNearWindow: true;
+      cost: 200;
+      passenger: null
+    }]
+  }
 ```
 
 Response body:
 ```javascript
-	[{
-		id: 742,
-		flight: 'B481',
-		from: 'Minks-1',
-		to: 'Domodedovo',
-		departureDate: '16/03/2023',
-		departureTime: '17:44',
-		arrivalDate: '16/03/2023',
-		arrivalTime: '18:42',
-		departureTerminal: 'B',
-		arrivalTerminal: 'E',
-		seats: [{
-			seat: 'A23';
-			isBusinessClass: false;
-			isNearWindow: true;
-			cost: 200;
-			passenger: null
-		}],
-	}]
+  {
+    id: 742,
+    flight: 'B481',
+    from: 'Minks-1',
+    to: 'Domodedovo',
+    departureDate: '16/03/2023',
+    departureTime: '17:44',
+    arrivalDate: '16/03/2023',
+    arrivalTime: '18:42',
+    departureTerminal: 'B',
+    arrivalTerminal: 'E',
+    seats: [{
+    seat: 'A23';
+      isBusinessClass: false;
+      isNearWindow: true;
+      cost: 200;
+      passenger: null
+    }]
+  }
 ```
 
 | Code             | 400 |
@@ -226,7 +225,7 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: 'reason',
+    message: 'reason'
   }
 ```
 
@@ -236,7 +235,7 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: 'Flight not found',
+    message: 'Flight not found'
   }
 ```
 
@@ -252,27 +251,28 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: 'Flight not found',
+    message: 'Flight not found'
   }
 ```
 ---
 
-???????????????????
-#### Path
+#### Terminals
 
-| `GET`  /path     | get all |
+| `GET`  /terminals     | Get all terminals |
 | :---             | :---- |
 | Code             | 200 |
-| Parameters |  PARAMS!!!!!!!!   |
+| Parameters |  order   |
 | Media type | application/json |
 
 Response body:
 ```javascript
-	[{
-	}]
+  [{
+    id: 'A',
+    gates: []
+  }]
 ```
 
-| `GET`  /path/{pathId}     | get by id|
+| `GET`  /terminals/{terminalId}     | Get terminal by id|
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -280,8 +280,10 @@ Response body:
 
 Response body:
 ```javascript
-	[{
-	}]
+  {
+    id: 'A',
+    gates: []
+  }
 ```
 
 | Code             | 404 |
@@ -290,11 +292,11 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: '???????? not found',
+    message: 'Terminal not found'
   }
 ```
 
-| `POST`  /path/{pathIdId}     | create ???|
+| `POST`  /terminals/{terminalId}     | Create terminal | 
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -302,15 +304,18 @@ Response body:
 
 Request body:
 ```javascript
-	[{
-	}],
-
+  {
+    id: 'A',
+    gates: [1, 2]
+  }
 ```
 
 Response body:
 ```javascript
-	[{
-	}]
+  {
+    id: 'A',
+    gates: [1, 2]
+  }
 ```
 
 | Code             | 400 |
@@ -319,11 +324,11 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: 'reason',
+    message: 'reason'
   }
 ```
 
-| `PATCH`  /path/{pathIdId}     | update ??? |
+| `PATCH`  /terminal/{terminalId}     | Update terminal |
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -331,15 +336,17 @@ Response body:
 
 Request body:
 ```javascript
-	[{
-	}],
-
+  {
+    gates: [1, 2, 3]
+  }
 ```
 
 Response body:
 ```javascript
-	[{
-	}]
+  {
+    id: 'A',
+    gates: [1, 2, 3]
+  }
 ```
 
 | Code             | 400 |
@@ -348,7 +355,7 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: 'reason',
+    message: 'reason'
   }
 ```
 | Code             | 404 |
@@ -357,11 +364,11 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: '???????? not found',
+    message: 'Terminal not found'
   }
 ```
 
-| `DELETE`  /????s/{????Id}     | Update ???? |
+| `DELETE`  /terminal/{terminalId}     | Delete terminal |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |
@@ -373,7 +380,146 @@ Response body: no content
 Response body:
 ```javascript
   { 
-    message: '????? not found',
+    message: 'Terminal not found'
+  }
+```
+---
+
+#### Employee
+
+| `GET`  /employee | Get all employee |
+| :---             | :---- |
+| Code             | 200 |
+| Parameters |  title   |
+| Media type | application/json |
+
+Response body:
+```javascript
+  [{
+    id: '3068a131-0992-4cf5-861b-b171cbb5d468',
+    title: 'ticket_officer',
+    firstName: 'Jane',
+    lastName: 'Doe',
+  }]
+```
+
+| `GET`  /employee/{employeeId}     | Get employee  by id |
+| :---             | :---- |
+| Code             | 200 |
+| Parameters |    |
+| Media type | application/json |
+
+Response body:
+```javascript
+  {
+    id: '3068a131-0992-4cf5-861b-b171cbb5d468',
+    title: 'ticket_officer',
+    firstName: 'Jane',
+    lastName: 'Doe'
+  }
+```
+
+| Code             | 404 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'Employee not found'
+  }
+```
+
+| `POST`  /employee/{employeeId}     | Create employee | 
+| :---             | :---- |
+| Code             | 201 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+  {
+    title: 'ticket_officer',
+    firstName: 'Jane',
+    lastName: 'Doe'
+  }
+
+```
+
+Response body:
+```javascript
+  {
+    id: '3068a131-0992-4cf5-861b-b171cbb5d468',
+    title: 'ticket_officer',
+    firstName: 'Jane',
+    lastName: 'Doe'
+  }
+```
+
+| Code             | 400 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'reason'
+  }
+```
+
+| `PATCH`  /employee/{employeeId}     | Update employee |
+| :---             | :---- |
+| Code             | 201 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+  {
+    title: 'ticket_officer'
+  }
+```
+
+Response body:
+```javascript
+  {
+    id: '3068a131-0992-4cf5-861b-b171cbb5d468',
+    title: 'ticket_officer',
+    firstName: 'Jane',
+    lastName: 'Doe'
+  }
+```
+
+| Code             | 400 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'reason'
+  }
+```
+| Code             | 404 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'Employee not found'
+  }
+```
+
+| `DELETE`  /employee/{employeeId}     | Delete employee|
+| :---             | :---- |
+| Code             | 204 |
+| Media type |  |
+Response body: no content
+
+| Code             | 404 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    message: 'Employee not found'
   }
 ```
 ---
