@@ -1,9 +1,10 @@
-#### Path
+### {{Param}}
 
-| `GET`  /path     | get all |
+#### Get all {{param}}s
+| `GET`  /{{param}}| Return all {{param}} |
 | :---             | :---- |
 | Code             | 200 |
-| Parameters |  PARAMS!!!!!!!!   |
+| Parameters |     |
 | Media type | application/json |
 
 Response body:
@@ -11,8 +12,10 @@ Response body:
 	[{
 	}]
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `GET`  /path/{pathId}     | get by id|
+#### Get {{param}} by id
+| `GET`  /{{param}}/{{{param}}Id}     | Return {{param}} by id|
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -30,11 +33,13 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: '???????? not found'
+    message: '{{Param}} not found'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `POST`  /path/{pathIdId}     | create ???|
+#### Create new {{param}}
+| `POST`  /{{param}}/{{{param}}Id}     | Return newly created {{param}}|
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -62,8 +67,11 @@ Response body:
     message: 'reason'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `PATCH`  /path/{pathIdId}     | update ??? |
+#### Update {{param}}
+
+| `PATCH` /{{param}}/{{{param}}Id}  | Return updated {{param}} |
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -97,11 +105,13 @@ Response body:
 Response body:
 ```javascript
   { 
-    message: '???????? not found'
+    message: '{{Param}} not found'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `DELETE`  /????s/{????Id}     | Update ???? |
+#### Delete {{param}}
+| `DELETE`  /{{param}}/{{{param}}Id}     | Return no data |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |
@@ -113,7 +123,7 @@ Response body: no content
 Response body:
 ```javascript
   { 
-    message: '????? not found'
+    message: '{{Param}} not found'
   }
 ```
 ---
