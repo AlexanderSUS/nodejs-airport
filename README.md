@@ -7,8 +7,23 @@
 3. [API](#api)
 	- [Test route](#test-route)
 	- [Flights](#flights)
+		- [Get all](#get-all-flights)
+		- [Get by id](#get-flight-by-id)
+		- [Create](#create-new-flight)
+		- [Update](#update-flight)
+		- [Delete](#delete-flight)
 	- [Terminals](#terminals)
+		- [Get all](#get-all-terminals)
+		- [Get by id](#get-terminal-by-id)
+		- [Create](#create-new-terminal)
+		- [Update](#update-terminal)
+		- [Delete](#delete-terminal)
 	- [Employee](#employee)
+		- [Get all](#get-all-employees)
+		- [Get by id](#get-employee-by-id)
+		- [Create](#create-new-employee)
+		- [Update](#update-employee)
+		- [Delete](#delete-employee)
 
 ## Installation
 Clone this repo with command
@@ -58,9 +73,9 @@ node index.js
 
 **URL** <http://localhost:4000>
 
-### API
+## API
 
-#### Test route
+### Test route
 | `GET`  **/**     | Return test string |
 | :---             | :---- |
 | Code             | 200 |
@@ -71,8 +86,39 @@ node index.js
 **[⬆ back to top](#table-of-contents)**
 ---
 
-#### Flights
+### Flights
 
+#### Get all flights
+| `GET`  /flights     | Return all flight |
+| ---             | ---- |
+| Code             | 200 |
+| Parameters |    |
+| Media type | application/json |
+Response body: 
+```javascript
+	[{
+		id: 742,
+		flight: 'B481',
+		from: 'Minks-1',
+		to: 'Domodedovo',
+		departureDate: '16/03/2023',
+		departureTime: '17:44',
+		arrivalDate: '16/03/2023',
+		arrivalTime: '18:42',
+		departureTerminal: 'B',
+		arrivalTerminal: 'E',
+		seats: [{
+			seat: 'A23';
+			isBusinessClass: false;
+			isNearWindow: true;
+			cost: 200;
+			passenger: null
+		}],
+	}]
+```
+**[⬆ back to top](#table-of-contents)**
+
+#### Get flight by id
 | `GET`  /flights/{flightId}     | Return flight by id |
 | ---             | ---- |
 | Code             | 200 |
@@ -110,7 +156,11 @@ Response body
   }
 ```
 
-| `POST`  /flights     | Create flight |
+**[⬆ back to top](#table-of-contents)**
+
+#### Create new flight
+
+| `POST`  /flights | return newly created flight |
 | :---             | :---- |
 | Code             | 201 |
 | Media type | application/json |
@@ -169,8 +219,12 @@ Response body
   }
 ```
 
+**[⬆ back to top](#table-of-contents)**
 
-| `PATCH`  /flights/{flightId}     | Update flight |
+#### Update flight
+
+
+| `PATCH`  /flights/{flightId}     | Return updated flight |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -240,8 +294,11 @@ Response body:
     message: 'Flight not found'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `DELETE`  /flights/{flightId}     | Update flight |
+#### Delete flight
+
+| `DELETE`  /flights/{flightId}     |  |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |
@@ -260,9 +317,9 @@ Response body:
 
 ---
 
-#### Terminals
-
-| `GET`  /terminals     | Get all terminals |
+### Terminals
+#### Get all terminals
+| `GET`  /terminals     | Return all terminals |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |  order   |
@@ -275,8 +332,11 @@ Response body:
     gates: []
   }]
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `GET`  /terminals/{terminalId}     | Get terminal by id|
+#### Get terminal by id
+
+| `GET`  /terminals/{terminalId}     | Return terminal by id |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -300,7 +360,11 @@ Response body:
   }
 ```
 
-| `POST`  /terminals/{terminalId}     | Create terminal | 
+**[⬆ back to top](#table-of-contents)**
+
+#### Create new terminal
+
+| `POST`  /terminals/{terminalId}     | Return newly created terminal | 
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -331,8 +395,11 @@ Response body:
     message: 'reason'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `PATCH`  /terminal/{terminalId}     | Update terminal |
+#### Update terminal
+
+| `PATCH`  /terminal/{terminalId}     | Return updated terminal |
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -371,8 +438,10 @@ Response body:
     message: 'Terminal not found'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `DELETE`  /terminal/{terminalId}     | Delete terminal |
+#### Delete terminal
+| `DELETE`  /terminal/{terminalId}     | Return no data |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |
@@ -391,9 +460,9 @@ Response body:
 
 ---
 
-#### Employee
-
-| `GET`  /employee | Get all employee |
+### Employee
+#### Get all employees
+| `GET`  /employee | Return all employees |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |  title   |
@@ -408,8 +477,11 @@ Response body:
     lastName: 'Doe',
   }]
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `GET`  /employee/{employeeId}     | Get employee  by id |
+#### Get employee by id
+
+| `GET`  /employee/{employeeId}     | Return employee by id |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -434,8 +506,11 @@ Response body:
     message: 'Employee not found'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `POST`  /employee/{employeeId}     | Create employee | 
+#### Create new employee
+
+| `POST`  /employee/{employeeId}     | Return newly created employee | 
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -470,8 +545,11 @@ Response body:
     message: 'reason'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `PATCH`  /employee/{employeeId}     | Update employee |
+#### Update employee
+
+| `PATCH`  /employee/{employeeId}     | Return updated employee |
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -512,8 +590,11 @@ Response body:
     message: 'Employee not found'
   }
 ```
+**[⬆ back to top](#table-of-contents)**
 
-| `DELETE`  /employee/{employeeId}     | Delete employee|
+#### Delete employee
+
+| `DELETE`  /employee/{employeeId}     | Return no data |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |
