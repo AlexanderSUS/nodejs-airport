@@ -71,17 +71,30 @@ npm run start:dev
 
 **Server will started on 0.0.0.0:5000**
 
-**URL** <http://localhost:5000>
+**URL** <http://localhost:5000/api/v1>
 
-## API
+## API 
 
 ### Test route
-| `GET`  **/**     | Return test string |
+| `GET`  **api/v1**     | Return test string |
 | :---             | :---- |
 | Code             | 200 |
-| Media type | |
+| Media type | text/html |
 | Parameters | |
 | Response         | 'Hello world' |
+
+| Code             | 404 |
+| :---             | :---- |
+| Media type | application/json |
+Response body
+```javascript
+  { 
+    statusCode: 400,
+    message: 'Cannot GET /api/users',
+    error: "Not found"
+  }
+```
+
 
 **[⬆ back to top](#table-of-contents)**
 
@@ -90,7 +103,7 @@ npm run start:dev
 ### Flights
 
 #### Get all flights
-| `GET`  /flights     | Return all flight |
+| `GET`  api/v1/flights     | Return all flight |
 | ---             | ---- |
 | Code             | 200 |
 | Parameters |    |
@@ -120,7 +133,7 @@ Response body:
 **[⬆ back to top](#table-of-contents)**
 
 #### Get flight by id
-| `GET`  /flights/{flightId}     | Return flight by id |
+| `GET`  api/v1/flights/{flightId}     | Return flight by id |
 | ---             | ---- |
 | Code             | 200 |
 | Parameters |    |
@@ -161,7 +174,7 @@ Response body
 
 #### Create new flight
 
-| `POST`  /flights | return newly created flight |
+| `POST`  api/v1/flights | return newly created flight |
 | :---             | :---- |
 | Code             | 201 |
 | Media type | application/json |
@@ -225,7 +238,7 @@ Response body
 #### Update flight
 
 
-| `PATCH`  /flights/{flightId}     | Return updated flight |
+| `PATCH`  api/v1/flights/{flightId}     | Return updated flight |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -299,7 +312,7 @@ Response body:
 
 #### Delete flight
 
-| `DELETE`  /flights/{flightId}     |  |
+| `DELETE`  api/v1/flights/{flightId}     |  |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |
@@ -320,7 +333,7 @@ Response body:
 
 ### Terminals
 #### Get all terminals
-| `GET`  /terminals     | Return all terminals |
+| `GET`  api/v1/terminals     | Return all terminals |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |  order   |
@@ -337,7 +350,7 @@ Response body:
 
 #### Get terminal by id
 
-| `GET`  /terminals/{terminalId}     | Return terminal by id |
+| `GET`  api/v1/terminals/{terminalId}     | Return terminal by id |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -365,7 +378,7 @@ Response body:
 
 #### Create new terminal
 
-| `POST`  /terminals/{terminalId}     | Return newly created terminal | 
+| `POST`  api/v1/terminals/{terminalId}     | Return newly created terminal | 
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -400,7 +413,7 @@ Response body:
 
 #### Update terminal
 
-| `PATCH`  /terminal/{terminalId}     | Return updated terminal |
+| `PATCH`  api/v1/terminal/{terminalId}     | Return updated terminal |
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -442,7 +455,7 @@ Response body:
 **[⬆ back to top](#table-of-contents)**
 
 #### Delete terminal
-| `DELETE`  /terminal/{terminalId}     | Return no data |
+| `DELETE`  api/v1/terminal/{terminalId}     | Return no data |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |
@@ -463,7 +476,7 @@ Response body:
 
 ### Employee
 #### Get all employees
-| `GET`  /employee | Return all employees |
+| `GET`  api/v1/employee | Return all employees |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |  title   |
@@ -482,7 +495,7 @@ Response body:
 
 #### Get employee by id
 
-| `GET`  /employee/{employeeId}     | Return employee by id |
+| `GET`  api/v1/employee/{employeeId}     | Return employee by id |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -511,7 +524,7 @@ Response body:
 
 #### Create new employee
 
-| `POST`  /employee/{employeeId}     | Return newly created employee | 
+| `POST`  api/v1/employee/{employeeId}     | Return newly created employee | 
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -550,7 +563,7 @@ Response body:
 
 #### Update employee
 
-| `PATCH`  /employee/{employeeId}     | Return updated employee |
+| `PATCH`  api/v1/employee/{employeeId}     | Return updated employee |
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -595,7 +608,7 @@ Response body:
 
 #### Delete employee
 
-| `DELETE`  /employee/{employeeId}     | Return no data |
+| `DELETE`  api/v1/employee/{employeeId}     | Return no data |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |

@@ -1,7 +1,7 @@
 ### {{Param}}
 
 #### Get all {{param}}s
-| `GET`  /{{param}}| Return all {{param}} |
+| `GET`  api/v1/{{param}}| Return all {{param}} |
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |     |
@@ -15,7 +15,7 @@ Response body:
 **[⬆ back to top](#table-of-contents)**
 
 #### Get {{param}} by id
-| `GET`  /{{param}}/{{{param}}Id}     | Return {{param}} by id|
+| `GET`  api/v1/{{param}}/{{{param}}Id}     | Return {{param}} by id|
 | :---             | :---- |
 | Code             | 200 |
 | Parameters |    |
@@ -39,7 +39,7 @@ Response body:
 **[⬆ back to top](#table-of-contents)**
 
 #### Create new {{param}}
-| `POST`  /{{param}}/{{{param}}Id}     | Return newly created {{param}}|
+| `POST`  api/v1/{{param}}/{{{param}}Id}     | Return newly created {{param}}|
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -71,7 +71,7 @@ Response body:
 
 #### Update {{param}}
 
-| `PATCH` /{{param}}/{{{param}}Id}  | Return updated {{param}} |
+| `PATCH` api/v1/{{param}}/{{{param}}Id}  | Return updated {{param}} |
 | :---             | :---- |
 | Code             | 201 |
 | Parameters |    |
@@ -111,7 +111,7 @@ Response body:
 **[⬆ back to top](#table-of-contents)**
 
 #### Delete {{param}}
-| `DELETE`  /{{param}}/{{{param}}Id}     | Return no data |
+| `DELETE`  api/v1/{{param}}/{{{param}}Id}     | Return no data |
 | :---             | :---- |
 | Code             | 204 |
 | Media type |  |
