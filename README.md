@@ -5,25 +5,29 @@
 1. [Installation](#installation)
 2. [Run](#run)
 3. [API](#api)
-	- [Test route](#test-route)
-	- [Flights](#flights)
-		- [Get all](#get-all-flights)
-		- [Get by id](#get-flight-by-id)
-		- [Create](#create-new-flight)
-		- [Update](#update-flight)
-		- [Delete](#delete-flight)
-	- [Terminals](#terminals)
-		- [Get all](#get-all-terminals)
-		- [Get by id](#get-terminal-by-id)
-		- [Create](#create-new-terminal)
-		- [Update](#update-terminal)
-		- [Delete](#delete-terminal)
-	- [Employee](#employee)
-		- [Get all](#get-all-employees)
-		- [Get by id](#get-employee-by-id)
-		- [Create](#create-new-employee)
-		- [Update](#update-employee)
-		- [Delete](#delete-employee)
+  - [Test route](#test-route)
+  - [Authentication](#authentication)
+    - [Log in](#log-in)
+    - [Refresh](#refresh)
+    - [Log out](#log-out)
+- [Flights](#flights)
+  - [Get all](#get-all-flights)
+  - [Get by id](#get-flight-by-id)
+  - [Create](#create-new-flight)
+  - [Update](#update-flight)
+  - [Delete](#delete-flight)
+- [Terminals](#terminals)
+  - [Get all](#get-all-terminals)
+  - [Get by id](#get-terminal-by-id)
+  - [Create](#create-new-terminal)
+  - [Update](#update-terminal)
+  - [Delete](#delete-terminal)
+- [Employee](#employee)
+  - [Get all](#get-all-employees)
+  - [Get by id](#get-employee-by-id)
+  - [Create](#create-new-employee)
+  - [Update](#update-employee)
+  - [Delete](#delete-employee)
 
 ## Installation
 Clone this repo with command
@@ -71,7 +75,10 @@ npm run start:dev
 
 **Server will started on 0.0.0.0:5000**
 
-**URL** <http://localhost:5000/api/v1>
+**Test URL** <http://localhost:5000/api/v1>
+
+**You can check redis on** <http://localhost:8081>
+
 
 ## API 
 
@@ -95,6 +102,114 @@ Response body
   }
 ```
 
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+### Authentication
+
+#### Log in 
+
+| `POST`  api/v1/auth/login     | Return tokens for authentication |
+| :---             | :---- |
+| Code             | 200 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+  {
+    email: "test@test.test",
+    password: "test1234",
+  }
+
+```
+
+Response body:
+```javascript
+  {
+    accessToken: "1679749058874834919680",
+    refreshToken: "1679749058874679835672",
+  }
+```
+
+| Code             | 400 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    statusCode: 400,
+    message: "Invalid credentials",
+  }
+```
+
+#### Refresh 
+| `POST`  api/v1/auth/refresh | Return new pair of authentication tokens |
+| :---             | :---- |
+| Code             | 200 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+  {
+    refreshToken: "1679749058874679835672",
+  }
+
+```
+
+Response body:
+```javascript
+  {
+    accessToken: "1679749058874834919680",
+    refreshToken: "1679749058874679835673",
+  }
+```
+
+
+| Code             | 401 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    statusCode: 401,
+    message: "Unauthorized",
+  }
+```
+
+**[⬆ back to top](#table-of-contents)**
+
+#### Log out 
+| `POST`  api/v1/auth/logout | logout user |
+| :---             | :---- |
+| Code             | 204 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+  {
+    accessToken: "1679749058874834919680",
+    refreshToken: "1679749058874679835673",
+  }
+
+```
+
+Response body:
+
+| Code             | 401 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    statusCode: 401,
+    message: "Unauthorized",
+  }
+```
 
 **[⬆ back to top](#table-of-contents)**
 
