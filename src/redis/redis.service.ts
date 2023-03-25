@@ -6,18 +6,14 @@ import { SECONDS_PER_MINUTE } from './const';
 export class RedisService {
   constructor(@Inject(CACHE_MANAGER) private readonly redisService: Cache) {}
 
-  set(key: string, value: string, expirationTime: number) {
+  save(key: string, value: string, expirationTime: number) {
     return this.redisService.set(key, value, {
       ttl: expirationTime * SECONDS_PER_MINUTE,
     });
   }
 
   find(key: string) {
-    return this.redisService.get(key);
-  }
-
-  removeMany(...keys: string[]) {
-    keys.forEach(async (key) => await this.redisService.del(key));
+    return this.redisService.get<string>(key);
   }
 
   remove(key: string) {
