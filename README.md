@@ -56,6 +56,11 @@ Run application
 docker compose up
 ```
 
+Run with rebuild
+```sh
+docker compose up --build
+```
+
 Run application in detached mode
 ```sh
 docker compose up -d
