@@ -1,13 +1,13 @@
-FROM node:16-alpine
+FROM node:alpine
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm ci 
-
-EXPOSE 4000
+RUN npm install 
 
 COPY . .
 
-CMD [ "node", "index.js" ]
+USER node
+
+CMD ["npm", "run", "start:dev"]

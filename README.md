@@ -68,15 +68,15 @@ Stop application
 docker compose down
 ```
 
-### Run as is
+### Run in development mode as is
 Run command
 ```sh
-node index.js
+npm run start:dev
 ```
 
-**Server will started on 0.0.0.0:4000**
+**Server will started on 0.0.0.0:5000**
 
-**URL** <http://localhost:4000/api/v1>
+**URL** <http://localhost:5000/api/v1>
 
 ## API 
 
@@ -84,7 +84,7 @@ node index.js
 | `GET`  **api/v1**     | Return test string |
 | :---             | :---- |
 | Code             | 200 |
-| Media type | text/plain |
+| Media type | text/html |
 | Parameters | |
 | Response         | 'Hello world' |
 
@@ -94,7 +94,9 @@ node index.js
 Response body
 ```javascript
   { 
-    message: 'Could not GET /api/users'
+    statusCode: 400,
+    message: 'Cannot GET /api/users',
+    error: "Not found"
   }
 ```
 
