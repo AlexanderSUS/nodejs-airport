@@ -34,7 +34,7 @@ services:
     ports:
       - ${DB_PORT}:${DB_PORT}
     volumes:
-      - airportapp:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     environment:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
