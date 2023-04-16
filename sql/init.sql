@@ -17,11 +17,22 @@ CREATE TABLE aircraft  (
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE passenger (
-	id uuid NOT NULL DEFAULT uuid_generate_v4(),
-	fist_name varchar NOT NULL,
-	last_name varchar NOT NULL,
-	PRIMARY KEY (id)
+
+CREATE TABLE person (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  first_name varchar NOT NULL,
+  last_name varchar NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TYPE document_type AS ENUM ('passport', 'visa', 'driver_licence');
+
+CREATE TABLE document (
+  id uuid NOT NULL DEFAULT uuid_generate_v4(),
+  type document_type,
+  person_id uuid NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (person_id) REFERENCES person (id)
 );
 
 CREATE TABLE airport (
@@ -76,10 +87,10 @@ CREATE TABLE flight (
 	FOREIGN KEY (aircraft_id) REFERENCES aircraft(id)
 );
 
-CREATE TABLE flight_passengers_passenger (
+CREATE TABLE flight_document (
 	flight_id uuid NOT NULL,
-	passenger_id uuid NOT NULL,
-	PRIMARY KEY (flight_id, passenger_id),
-	FOREIGN KEY (passenger_id) REFERENCES passenger(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	document_id uuid NOT NULL,
+	PRIMARY KEY (flight_id, document_id),
+	FOREIGN KEY (document_id) REFERENCES document (id) ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (flight_id) REFERENCES flight(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
