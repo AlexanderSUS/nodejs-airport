@@ -72,18 +72,46 @@ Stop application
 docker compose down
 ```
 
-### Run in development mode as is
-Run command
-```sh
-npm run start:dev
-```
-
 **Server will started on 0.0.0.0:5000**
 
 **Test URL** <http://localhost:5000/api/v1>
 
 **You can check redis on** <http://localhost:8081>
 
+
+## Database
+
+You can find database description in DB.md file.
+
+After the app is started database **automatically will be seeded with
+aircraft, airport, flight, terminal, gate, person data**.
+
+To see data in the database you can use pgAdmin, after an app is started it will be
+available on http://localhost:8080.
+
+For login use
+- mail:  `admin@admin.com`
+- password - `pgadmin`
+
+After login 
+- click `Add new server`
+- type any `name`
+- pick `Connections`
+- Host name/address - `db`
+- Maintenance database - `airport`
+- username - `admin`
+- password - `admin`
+- click - `save`
+
+To see tables
+- in left up conner unwrap connection 
+- -> Servers -> Databases -> airport -> Schemas -> Public -> Tables
+
+Too see table data
+- -> Right click on table -> View/Edit data
+
+
+**[⬆ back to top](#table-of-contents)**
 
 ## API 
 
