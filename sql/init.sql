@@ -17,11 +17,6 @@ CREATE TABLE aircraft  (
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE country  (
-	name varchar NOT NULL,
-	PRIMARY KEY (name)
-);
-
 CREATE TABLE passenger (
 	id uuid NOT NULL DEFAULT uuid_generate_v4(),
 	fist_name varchar NOT NULL,
@@ -29,25 +24,13 @@ CREATE TABLE passenger (
 	PRIMARY KEY (id)
 );
 
-CREATE TABLE city (
-	id uuid NOT NULL DEFAULT uuid_generate_v4(),
-	name varchar NOT NULL,
-	country_name varchar NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY (country_name) 
-        REFERENCES country(name)
-        ON DELETE CASCADE
-);
-
 CREATE TABLE airport (
 	id uuid NOT NULL DEFAULT uuid_generate_v4(),
 	iata varchar(3) NOT NULL,
 	name varchar NOT NULL,
-	city_id uuid NULL,
-	country_name varchar NULL,
-	PRIMARY KEY (id),
-	FOREIGN KEY (country_name) REFERENCES country(name),
-	FOREIGN KEY (city_id) REFERENCES city(id)
+	city varchar NOT NULL,
+	country varchar NOT NULL,
+	PRIMARY KEY (id)
 );
 
 CREATE TABLE terminal (
