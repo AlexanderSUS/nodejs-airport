@@ -27,4 +27,4 @@
 ![Screenshot from 2023-04-16 23-23-56](https://user-images.githubusercontent.com/81330484/232340084-f868f70a-a5e3-4b86-9df6-ee503af8bd82.png)
 
 #### Table employee
-![Screenshot from 2023-04-16 22-55-30](https://user-images.githubusercontent.com/81330484/232339250-cd800054-8c81-4ac4-bbef-72d90c981760.png)
+![Screenshot from 2023-04-26 10-03-05](https://user-images.githubusercontent.com/81330484/234495958-f628ec92-71aa-433f-9fa1-a96456ad4035.png)
