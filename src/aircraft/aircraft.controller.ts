@@ -3,12 +3,12 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   ParseUUIDPipe,
   HttpStatus,
   HttpCode,
+  Put,
 } from '@nestjs/common';
 import { AircraftService } from './aircraft.service';
 import { CreateAircraftDto } from './dto/create-aircraft.dto';
@@ -33,7 +33,7 @@ export class AircraftController {
     return this.aircraftService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateAircraftDto: UpdateAircraftDto,
