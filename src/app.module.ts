@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { EmployeeModule } from './employee/employee.module';
 import { databaseModuleOptions } from './config/database-module-options';
+import { AircraftModule } from './aircraft/aircraft.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { databaseModuleOptions } from './config/database-module-options';
     AuthModule,
     DatabaseModule.forRootAsync(databaseModuleOptions),
     EmployeeModule,
+    AircraftModule,
   ],
   controllers: [AppController],
   providers: [AppService],
