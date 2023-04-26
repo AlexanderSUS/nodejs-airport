@@ -48,7 +48,7 @@ export class EmployeeRepository {
   async getById(id: string) {
     const databaseResponse = await this.databaseService.runQuery(
       `
-      SELECT * FROMM employee WHERE id=$1
+      SELECT * FROM employee WHERE id=$1
     `,
       [id],
     );
