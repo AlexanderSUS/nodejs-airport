@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Pool } from 'pg';
 import { CONNECTION_POOL } from './database.module-definition';
-import { isUniqueViolationError } from './util/isUniqViolationError';
+import { isUniqueViolationError } from './util/is-unique-violation-error';
 
 @Injectable()
 class DatabaseService<T> {

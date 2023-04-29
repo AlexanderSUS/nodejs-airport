@@ -1,4 +1,4 @@
-import { PostgresErrorCode } from './postgresErrorCodes.enum';
+import { PostgresErrorCode } from '../enum/postgres-error-codes.enum';
 
 export const isUniqueViolationError = (error: any) => {
   return (

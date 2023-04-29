@@ -3,7 +3,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { LoginDto } from './dto/loginDto';
+import { LoginDto } from './dto/login.dto';
 import { TokenService } from './token.service';
 import { EmployeeService } from 'src/employee/employee.service';
 import { CreateEmployeeDto } from 'src/employee/dto/create-employee.dto';
