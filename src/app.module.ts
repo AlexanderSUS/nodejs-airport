@@ -9,6 +9,7 @@ import { EmployeeModule } from './employee/employee.module';
 import { databaseModuleOptions } from './config/database-module-options';
 import { AircraftModule } from './aircraft/aircraft.module';
 import { PersonModule } from './person/person.module';
+import { DocumentModule } from './document/document.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { PersonModule } from './person/person.module';
     EmployeeModule,
     AircraftModule,
     PersonModule,
+    DocumentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
