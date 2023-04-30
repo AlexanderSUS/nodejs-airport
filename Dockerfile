@@ -22,7 +22,7 @@ RUN npm run build
 
 ENV NODE_ENV production
 
-RUN npm ci --only=production && npm cache clean --force
+RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
 
 FROM node:18-alpine as production
 

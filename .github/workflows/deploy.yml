@@ -50,4 +50,5 @@ jobs:
           target: production
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/clockbox:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/nodejs-airport:latest
+

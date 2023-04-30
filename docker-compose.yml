@@ -1,7 +1,7 @@
 version: "3"
 services:
   app:
-    image: alexandersus/nodejs-airport:v1
+    image: alexandersus/nodejs-airport
     container_name: nodejs-airport 
     build: 
       context: .
