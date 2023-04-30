@@ -16,7 +16,7 @@ services:
     depends_on:
       - redis
       - db
-    restart: unless-stopped
+    restart: always 
   redis:
     image: redis:latest
     container_name: redis-server

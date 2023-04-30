@@ -7,6 +7,7 @@
 3. [API](#api)
   - [Test route](#test-route)
   - [Authentication](#authentication)
+    - [Register](#register)
     - [Log in](#log-in)
     - [Refresh](#refresh)
     - [Log out](#log-out)
@@ -141,6 +142,47 @@ Response body
 ---
 
 ### Authentication
+
+#### Register 
+
+| `POST`  api/v1/auth/register    | Return tokens for authentication |
+| :---             | :---- |
+| Code             | 200 |
+| Parameters |    |
+| Media type | application/json |
+
+Request body:
+```javascript
+  {
+    firstName: "John",
+    lastName: "Doe", 
+    email: "test@test.test",
+    password: "test1234",
+  }
+
+```
+
+Response body:
+```javascript
+  {
+    id: "fbe2d91b-8405-42ee-b0e4-9439a43abc8e",
+    firstName: "John",
+    lastName: "Doe", 
+    email: "test@test.test",
+  }
+```
+
+| Code             | 400 |
+| :---             | :---- |
+| Media type | application/json |
+Response body:
+```javascript
+  { 
+    statusCode: 400,
+    message: "Key (email)=(test@test.test) already exists.",
+    error: "Bad request"
+  }
+```
 
 #### Log in 
 

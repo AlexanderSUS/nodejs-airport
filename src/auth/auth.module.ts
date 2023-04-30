@@ -3,10 +3,10 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { RedisModule } from 'src/redis/redis.module';
 import { TokenService } from './token.service';
-import { DatabaseModule } from 'src/database/database.module';
+import { EmployeeModule } from 'src/employee/employee.module';
 
 @Module({
-  imports: [RedisModule, DatabaseModule],
+  imports: [RedisModule, EmployeeModule],
   controllers: [AuthController],
   providers: [AuthService, TokenService],
 })

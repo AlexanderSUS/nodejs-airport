@@ -1,23 +1,28 @@
-import { Injectable } from '@nestjs/common';
-import { Employee } from './interface/employee.interface';
-
-type EmployeeKey = keyof Omit<Employee, 'password'>;
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
+import { Pool } from 'pg';
+import { CONNECTION_POOL } from './database.module-definition';
+import { isUniqueViolationError } from './util/isUniqViolationError';
 
 @Injectable()
-export class DatabaseService {
-  private readonly store: Array<Employee> = [
-    {
-      id: '1',
-      email: 'test@test.test',
-      password: 'test1234',
-    },
-  ];
+class DatabaseService<T> {
+  constructor(@Inject(CONNECTION_POOL) private readonly pool: Pool) {}
 
-  findAll() {
-    return [...this.store];
-  }
+  async runQuery(query: string, params?: unknown[]) {
+    try {
+      return await this.pool.query<T>(query, params);
+    } catch (error) {
+      if (isUniqueViolationError(error)) {
+        throw new BadRequestException(error.detail);
+      }
 
-  findOne({ key, value }: { key: EmployeeKey; value: string }) {
-    return this.store.find((employee) => employee[key] === value);
+      throw new InternalServerErrorException();
+    }
   }
 }
+
+export default DatabaseService;
