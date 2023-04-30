@@ -3,7 +3,10 @@ services:
   app:
     image: alexandersus/nodejs-airport:v1
     container_name: nodejs-airport 
-    build: .
+    build: 
+      context: .
+      target: development 
+    command: npm run start:dev
     ports:
       - ${APP_PORT}:${APP_PORT}
     volumes:
