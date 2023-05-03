@@ -11,6 +11,7 @@ import { AircraftModule } from './aircraft/aircraft.module';
 import { PersonModule } from './person/person.module';
 import { DocumentModule } from './document/document.module';
 import { AirportsModule } from './airports/airports.module';
+import { TerminalsModule } from './terminals/terminals.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AirportsModule } from './airports/airports.module';
     PersonModule,
     DocumentModule,
     AirportsModule,
+    TerminalsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
