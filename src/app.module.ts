@@ -10,6 +10,7 @@ import { databaseModuleOptions } from './config/database-module-options';
 import { AircraftModule } from './aircraft/aircraft.module';
 import { PersonModule } from './person/person.module';
 import { DocumentModule } from './document/document.module';
+import { AirportsModule } from './airports/airports.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { DocumentModule } from './document/document.module';
     AircraftModule,
     PersonModule,
     DocumentModule,
+    AirportsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
