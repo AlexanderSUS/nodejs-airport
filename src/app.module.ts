@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 import { configModuleOptions } from './config/config-module-options.config';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
-import { EmployeeModule } from './employee/employee.module';
+import { EmployeesModule } from './employees/employees.module';
 import { databaseModuleOptions } from './config/database-module-options';
 import { AircraftModule } from './aircraft/aircraft.module';
 import { PersonModule } from './person/person.module';
@@ -17,7 +17,7 @@ import { AirportsModule } from './airports/airports.module';
     ConfigModule.forRoot(configModuleOptions),
     AuthModule,
     DatabaseModule.forRootAsync(databaseModuleOptions),
-    EmployeeModule,
+    EmployeesModule,
     AircraftModule,
     PersonModule,
     DocumentModule,

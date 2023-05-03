@@ -10,27 +10,27 @@ import {
   HttpStatus,
   ParseUUIDPipe,
 } from '@nestjs/common';
-import { EmployeeService } from './employee.service';
+import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 
 @Controller('employees')
 export class EmployeeController {
-  constructor(private readonly employeeService: EmployeeService) {}
+  constructor(private readonly employeesService: EmployeesService) {}
 
   @Post()
   create(@Body() createEmployeeDto: CreateEmployeeDto) {
-    return this.employeeService.create(createEmployeeDto);
+    return this.employeesService.create(createEmployeeDto);
   }
 
   @Get()
   findAll() {
-    return this.employeeService.findAll();
+    return this.employeesService.findAll();
   }
 
   @Get(':id')
   findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.employeeService.findOneById(id);
+    return this.employeesService.findOneById(id);
   }
 
   @Patch(':id')
@@ -38,12 +38,12 @@ export class EmployeeController {
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateEmployeeDto: UpdateEmployeeDto,
   ) {
-    return this.employeeService.update(id, updateEmployeeDto);
+    return this.employeesService.update(id, updateEmployeeDto);
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.employeeService.remove(id);
+    return this.employeesService.remove(id);
   }
 }

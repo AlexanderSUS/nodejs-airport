@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { EmployeeModel } from './employee.model';
+import { EmployeeModel } from './employees.model';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

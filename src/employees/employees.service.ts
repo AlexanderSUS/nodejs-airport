@@ -1,22 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { EmployeeRepository } from './employee.repository';
+import { EmployeeRepository } from './employees.repository';
 
 @Injectable()
-export class EmployeeService {
-  constructor(private readonly employeeRepository: EmployeeRepository) {}
+export class EmployeesService {
+  constructor(private readonly employeesRepository: EmployeeRepository) {}
 
   create(createEmployeeDto: CreateEmployeeDto) {
-    return this.employeeRepository.create(createEmployeeDto);
+    return this.employeesRepository.create(createEmployeeDto);
   }
 
   findAll() {
-    return this.employeeRepository.getAll();
+    return this.employeesRepository.getAll();
   }
 
   async findOneById(id: string) {
-    const employee = await this.employeeRepository.getById(id);
+    const employee = await this.employeesRepository.getById(id);
 
     if (!employee) {
       throw new NotFoundException();
@@ -26,11 +26,11 @@ export class EmployeeService {
   }
 
   findOneByEmail(email: string) {
-    return this.employeeRepository.getByEmail(email);
+    return this.employeesRepository.getByEmail(email);
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto) {
-    const employee = await this.employeeRepository.update(
+    const employee = await this.employeesRepository.update(
       id,
       updateEmployeeDto,
     );
@@ -43,6 +43,6 @@ export class EmployeeService {
   }
 
   async remove(id: string) {
-    await this.employeeRepository.delete(id);
+    await this.employeesRepository.delete(id);
   }
 }

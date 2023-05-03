@@ -5,15 +5,15 @@ import {
 } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { TokenService } from './token.service';
-import { EmployeeService } from 'src/employee/employee.service';
-import { CreateEmployeeDto } from 'src/employee/dto/create-employee.dto';
+import { EmployeesService } from 'src/employees/employees.service';
+import { CreateEmployeeDto } from 'src/employees/dto/create-employee.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly tokenService: TokenService,
-    private readonly employeeService: EmployeeService,
+    private readonly employeesService: EmployeesService,
   ) {}
 
   async register({ password, ...employeeData }: CreateEmployeeDto) {
@@ -21,7 +21,7 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...safeUser } = await this.employeeService.create({
+    const { password: _, ...safeUser } = await this.employeesService.create({
       ...employeeData,
       password: hashedPassword,
     });
@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   async logIn({ email, password }: LoginDto) {
-    const user = await this.employeeService.findOneByEmail(email);
+    const user = await this.employeesService.findOneByEmail(email);
 
     if (!user) {
       throw new BadRequestException('Invalid credentials');
