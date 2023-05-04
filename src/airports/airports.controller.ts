@@ -7,6 +7,8 @@ import {
   Delete,
   Put,
   ParseUUIDPipe,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { AirportsService } from './airports.service';
 import { CreateAirportDto } from './dto/create-airport.dto';
@@ -40,6 +42,7 @@ export class AirportsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.airportsService.remove(id);
   }

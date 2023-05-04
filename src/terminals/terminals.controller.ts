@@ -7,6 +7,8 @@ import {
   Delete,
   ParseUUIDPipe,
   Put,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { TerminalsService } from './terminals.service';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
@@ -40,6 +42,7 @@ export class TerminalsController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.NOT_FOUND)
   remove(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.terminalsService.remove(id);
   }
