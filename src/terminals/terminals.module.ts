@@ -8,5 +8,6 @@ import { AirportsModule } from 'src/airports/airports.module';
   imports: [AirportsModule],
   controllers: [TerminalsController],
   providers: [TerminalsService, TerminalsRepository],
+  exports: [TerminalsService],
 })
 export class TerminalsModule {}
