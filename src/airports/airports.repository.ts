@@ -37,7 +37,11 @@ export class AirportsRepository {
   }
 
   async getAll() {
-    return this.databaseService.runQuery(`SELECT * FROM airport`);
+    const databaseResponse = await this.databaseService.runQuery(
+      `SELECT * FROM airport`,
+    );
+
+    return databaseResponse.rows;
   }
 
   async getById(id: string) {
