@@ -2,16 +2,10 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateGateDto } from './dto/create-gate.dto';
 import { UpdateGateDto } from './dto/update-gate.dto';
 import { GatesRepository } from './gates.repository';
-import { TerminalsService } from 'src/terminals/terminals.service';
-import { AirportsService } from 'src/airports/airports.service';
 
 @Injectable()
 export class GatesService {
-  constructor(
-    private readonly gatesRepository: GatesRepository,
-    private readonly terminalsService: TerminalsService,
-    private readonly airportsService: AirportsService,
-  ) {}
+  constructor(private readonly gatesRepository: GatesRepository) {}
 
   create(createGateDto: CreateGateDto) {
     return this.gatesRepository.create(createGateDto);
@@ -32,20 +26,6 @@ export class GatesService {
   }
 
   async update(id: string, updateGateDto: UpdateGateDto) {
-    const airport = await this.airportsService.findOne(updateGateDto.airportId);
-
-    if (!airport) {
-      throw new NotFoundException('Airport with provided id does not exits');
-    }
-
-    const terminal = await this.terminalsService.findOne(
-      updateGateDto.terminalId,
-    );
-
-    if (!terminal) {
-      throw new NotFoundException('Airport with provided id does not exits');
-    }
-
     const updatedGate = await this.gatesRepository.update(id, updateGateDto);
 
     if (!updatedGate) {

@@ -1,29 +1,13 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
 import { UpdateTerminalDto } from './dto/update-terminal.dto';
 import { TerminalsRepository } from './terminals.repository';
-import { AirportsService } from 'src/airports/airports.service';
 
 @Injectable()
 export class TerminalsService {
-  constructor(
-    private readonly airportsService: AirportsService,
-    private readonly terminalsRepository: TerminalsRepository,
-  ) {}
+  constructor(private readonly terminalsRepository: TerminalsRepository) {}
 
   async create(createTerminalDto: CreateTerminalDto) {
-    const airport = await this.airportsService.findOne(
-      createTerminalDto.airportId,
-    );
-
-    if (!airport) {
-      throw new BadRequestException('Airport with provided id does not exist');
-    }
-
     return this.terminalsRepository.create(createTerminalDto);
   }
 
