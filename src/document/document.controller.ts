@@ -6,7 +6,7 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
-  Patch,
+  Put,
 } from '@nestjs/common';
 import { DocumentService } from './document.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
@@ -31,7 +31,7 @@ export class DocumentController {
     return this.documentService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
     @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @Body() updateDocumentDto: UpdateDocumentDto,
