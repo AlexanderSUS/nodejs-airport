@@ -56,7 +56,7 @@ CREATE TABLE document (
   type document_type,
   person_id uuid NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (person_id) REFERENCES person (id)
+  FOREIGN KEY (person_id) REFERENCES person (id) ON DELETE CASCADE
 );
 
 COMMENT ON TABLE document IS 'Store documents of persons';
@@ -90,8 +90,7 @@ CREATE TABLE terminal (
 	airport_id uuid NULL,
 	PRIMARY KEY (id),
 	FOREIGN KEY (airport_id) 
-        REFERENCES airport(id)
-        ON DELETE CASCADE
+        REFERENCES airport(id) ON DELETE CASCADE
 );
 
 
@@ -108,8 +107,8 @@ CREATE TABLE gate (
 	number varchar(6) NOT NULL,
 	airport_id uuid NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (airport_id) REFERENCES airport(id),
-	FOREIGN KEY (terminal_id) REFERENCES terminal(id)
+	FOREIGN KEY (airport_id) REFERENCES airport(id) ON DELETE CASCADE,
+	FOREIGN KEY (terminal_id) REFERENCES terminal(id) ON DELETE CASCADE
 );
 
 
@@ -136,20 +135,20 @@ CREATE TABLE flight (
 	arrival_gate_id uuid NULL,
 	arrival_terminal_id uuid NULL,
 	PRIMARY KEY (id),
-	FOREIGN KEY (departure_airport_id) REFERENCES airport(id),
-	FOREIGN KEY (departure_gate_id) REFERENCES gate(id),
-	FOREIGN KEY (departure_terminal_id) REFERENCES terminal(id),
-	FOREIGN KEY (arrival_airport_id) REFERENCES airport(id),
-	FOREIGN KEY (arrival_gate_id) REFERENCES gate(id),
-	FOREIGN KEY (arrival_terminal_id) REFERENCES terminal(id),
-	FOREIGN KEY (aircraft_id) REFERENCES aircraft(id)
+	FOREIGN KEY (departure_airport_id) REFERENCES airport(id) ON DELETE CASCADE,
+	FOREIGN KEY (departure_gate_id) REFERENCES gate(id) ON DELETE CASCADE,
+	FOREIGN KEY (departure_terminal_id) REFERENCES terminal(id) ON DELETE CASCADE,
+	FOREIGN KEY (arrival_airport_id) REFERENCES airport(id) ON DELETE CASCADE,
+	FOREIGN KEY (arrival_gate_id) REFERENCES gate(id) ON DELETE CASCADE,
+	FOREIGN KEY (arrival_terminal_id) REFERENCES terminal(id) ON DELETE CASCADE,
+	FOREIGN KEY (aircraft_id) REFERENCES aircraft(id) ON DELETE CASCADE
 );
 
 
 COMMENT ON TABLE flight IS 'Store flights data';
 
 COMMENT ON COLUMN flight.id IS 'Unique identifier';
-COMMENT ON COLUMN flight.const IS 'Cost of flight';
+COMMENT ON COLUMN flight.cost IS 'Cost of flight';
 COMMENT ON COLUMN flight.date IS 'Date of departure';
 COMMENT ON COLUMN flight.aircraft_id IS 'Identifier of plane perform flight';
 COMMENT ON COLUMN flight.departure_time IS 'Time of departure';
