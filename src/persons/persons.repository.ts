@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
-import { PersonModel } from './person.model';
+import { PersonsModel } from './persons.model';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdatePersonDto } from './dto/update-person.dto';
 
 @Injectable()
 export class PersonRepository {
-  constructor(private readonly databaseService: DatabaseService<PersonModel>) {}
+  constructor(
+    private readonly databaseService: DatabaseService<PersonsModel>,
+  ) {}
 
   async create(createPersonDto: CreatePersonDto) {
     const databaseResponse = await this.databaseService.runQuery(
@@ -23,7 +25,7 @@ export class PersonRepository {
       [createPersonDto.firstName, createPersonDto.lastName],
     );
 
-    return plainToInstance(PersonModel, databaseResponse.rows[0]);
+    return plainToInstance(PersonsModel, databaseResponse.rows[0]);
   }
 
   async getAll() {
@@ -31,7 +33,7 @@ export class PersonRepository {
       SELECT * FROM person
     `);
 
-    return plainToInstance(PersonModel, databaseResponse.rows);
+    return plainToInstance(PersonsModel, databaseResponse.rows);
   }
 
   async getById(id: string) {
@@ -42,7 +44,7 @@ export class PersonRepository {
     );
 
     const [entity] = databaseResponse.rows;
-    return plainToInstance(PersonModel, entity);
+    return plainToInstance(PersonsModel, entity);
   }
 
   async update(id: string, updatePersonDto: UpdatePersonDto) {
@@ -58,7 +60,7 @@ export class PersonRepository {
 
     const [entity] = databaseResponse.rows;
 
-    return plainToInstance(PersonModel, entity);
+    return plainToInstance(PersonsModel, entity);
   }
 
   async delete(id: string) {

@@ -8,7 +8,7 @@ import {
   ParseUUIDPipe,
   Put,
 } from '@nestjs/common';
-import { PersonService } from './person.service';
+import { PersonService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 

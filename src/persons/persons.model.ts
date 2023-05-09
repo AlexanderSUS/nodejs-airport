@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 
-export class PersonModel {
+export class PersonsModel {
   id: string;
 
   @Expose({ name: 'first_name' })

@@ -6,7 +6,7 @@ import {
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
 import { DocumentRepository } from './document.repository';
-import { PersonService } from 'src/person/person.service';
+import { PersonService } from 'src/persons/persons.service';
 
 @Injectable()
 export class DocumentService {
