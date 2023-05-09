@@ -1,4 +1,12 @@
-import { IsDateString, IsOptional, IsString, Length } from 'class-validator';
+import { Transform } from 'class-transformer';
+import {
+  IsDateString,
+  IsOptional,
+  IsString,
+  Length,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class FlightsSearchQueryParamsDto {
   @IsDateString()
@@ -24,4 +32,10 @@ export class FlightsSearchQueryParamsDto {
   @IsString()
   @IsOptional()
   arrival_country?: string;
+
+  @Max(1000)
+  @Min(0)
+  @Transform(({ value }) => parseInt(value, 10))
+  @IsOptional()
+  available_seats? = 0;
 }

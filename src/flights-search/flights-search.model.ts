@@ -29,4 +29,7 @@ export class FlightsSearchModel {
 
   @Expose({ name: 'available_seats' })
   availableSeats: string;
+
+  @Expose({ name: 'aircraft_model' })
+  aircraftModel: string;
 }
