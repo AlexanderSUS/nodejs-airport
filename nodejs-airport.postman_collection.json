@@ -1304,12 +1304,12 @@
 			"name": "flights-search",
 			"item": [
 				{
-					"name": "New Request",
+					"name": "Search",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/flights-search?departure_country=Netherlands&arrival_city=Tokyo&date=2023-03-27&available_seats=5",
+							"raw": "{{baseUrl}}/flights-search?departure_airport.country=Netherlands&arrival_airport.city=Dubai&start_date=2023-04-27&available_seats=200&end_date=2023-05-01",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -1318,20 +1318,24 @@
 							],
 							"query": [
 								{
-									"key": "departure_country",
+									"key": "departure_airport.country",
 									"value": "Netherlands"
 								},
 								{
-									"key": "arrival_city",
-									"value": "Tokyo"
+									"key": "arrival_airport.city",
+									"value": "Dubai"
 								},
 								{
-									"key": "date",
-									"value": "2023-03-27"
+									"key": "start_date",
+									"value": "2023-04-27"
 								},
 								{
 									"key": "available_seats",
-									"value": "5"
+									"value": "200"
+								},
+								{
+									"key": "end_date",
+									"value": "2023-05-01"
 								}
 							]
 						}
