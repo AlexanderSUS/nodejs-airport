@@ -38,7 +38,7 @@ export class FlightsSearchQueryParamsDto {
   'arrival_airport.county'?: string;
 
   @Max(1000)
-  @Min(0)
+  @Min(1)
   @Transform(({ value }) => parseInt(value, 10))
   @IsOptional()
   available_seats? = 1;
