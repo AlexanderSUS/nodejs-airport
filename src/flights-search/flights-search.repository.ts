@@ -34,6 +34,7 @@ export class FlightsSearchRepository {
           SELECT 
             f.id AS flight_id
             ,f."date" AS flight_date
+            ,f.cost AS cost
             ,da.city AS departure_city
             ,da.country AS departure_country
             ,da.iata AS departure_airport_iata

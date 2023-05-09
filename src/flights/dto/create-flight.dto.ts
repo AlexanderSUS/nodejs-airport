@@ -1,8 +1,22 @@
-import { IsUUID, IsString, IsDateString } from 'class-validator';
+import {
+  IsUUID,
+  IsString,
+  IsDateString,
+  IsNumber,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class CreateFlightDto {
   @IsDateString()
   date: Date;
+
+  @Max(1000000)
+  @Min(0.01)
+  @IsNumber({
+    maxDecimalPlaces: 2,
+  })
+  cost: string;
 
   @IsUUID('4')
   aircraftId: string;

@@ -123,6 +123,7 @@ COMMENT ON COLUMN gate.airport_id IS 'Airport identifier where gate located';
 
 CREATE TABLE flight (
 	id uuid NOT NULL DEFAULT uuid_generate_v4(),
+	cost MONEY NOT NULL,
 	date DATE NOT NULL,
 	aircraft_id uuid NULL,
 	departure_time varchar NOT NULL,
@@ -148,6 +149,7 @@ CREATE TABLE flight (
 COMMENT ON TABLE flight IS 'Store flights data';
 
 COMMENT ON COLUMN flight.id IS 'Unique identifier';
+COMMENT ON COLUMN flight.const IS 'Cost of flight';
 COMMENT ON COLUMN flight.date IS 'Date of departure';
 COMMENT ON COLUMN flight.aircraft_id IS 'Identifier of plane perform flight';
 COMMENT ON COLUMN flight.departure_time IS 'Time of departure';

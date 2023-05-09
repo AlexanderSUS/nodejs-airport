@@ -24,7 +24,8 @@ export class FlightsRepository {
         departure_gate_id,
         arrival_airport_id,
         arrival_terminal_id,
-        arrival_gate_id
+        arrival_gate_id,
+        cost
       ) VALUES (
         $1,
         $2, 
@@ -35,7 +36,8 @@ export class FlightsRepository {
         $7,
         $8,
         $9,
-        $10
+        $10,
+        $11
       ) RETURNING *
     `,
       [
@@ -49,6 +51,7 @@ export class FlightsRepository {
         createFlightDto.arrivalAirportId,
         createFlightDto.arrivalTerminalId,
         createFlightDto.arrivalGateId,
+        createFlightDto.cost,
       ],
     );
 
