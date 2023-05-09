@@ -11,7 +11,11 @@ import {
 export class FlightsSearchQueryParamsDto {
   @IsDateString()
   @IsOptional()
-  date?: string;
+  start_date: string;
+
+  @IsDateString()
+  @IsOptional()
+  end_date: string;
 
   @Length(1, 100)
   @IsString()
