@@ -3,6 +3,8 @@ import { Expose } from 'class-transformer';
 export class FlightsSearchModel {
   date: string;
 
+  cost: string;
+
   @Expose({ name: 'departure_country' })
   departureCountry: string;
 
