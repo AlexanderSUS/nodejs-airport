@@ -15,6 +15,7 @@ import { TerminalsModule } from './terminals/terminals.module';
 import { GatesModule } from './gates/gates.module';
 import { FlightsModule } from './flights/flights.module';
 import { FlightDocumentsModule } from './flight-documents/flight-documents.module';
+import { FlightsSearchModule } from './flights-search/flights-search.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { FlightDocumentsModule } from './flight-documents/flight-documents.modul
     GatesModule,
     FlightsModule,
     FlightDocumentsModule,
+    FlightsSearchModule,
   ],
   controllers: [AppController],
   providers: [AppService],
