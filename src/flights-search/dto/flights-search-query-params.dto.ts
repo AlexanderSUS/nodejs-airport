@@ -16,26 +16,26 @@ export class FlightsSearchQueryParamsDto {
   @Length(1, 100)
   @IsString()
   @IsOptional()
-  departure_city?: string;
+  'departure_airport.city'?: string;
 
   @Length(1, 100)
   @IsString()
   @IsOptional()
-  departure_country?: string;
+  'departure_airport.country'?: string;
 
   @Length(1, 100)
   @IsString()
   @IsOptional()
-  arrival_city?: string;
+  'arrival_airport.city'?: string;
 
   @Length(1, 100)
   @IsString()
   @IsOptional()
-  arrival_country?: string;
+  'arrival_airport.county'?: string;
 
   @Max(1000)
   @Min(0)
   @Transform(({ value }) => parseInt(value, 10))
   @IsOptional()
-  available_seats? = 0;
+  available_seats? = 1;
 }

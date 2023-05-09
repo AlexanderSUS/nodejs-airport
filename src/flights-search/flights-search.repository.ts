@@ -17,11 +17,7 @@ export class FlightsSearchRepository {
     let i = 1;
 
     for (const key in restParams) {
-      const tableKey = key
-        .replace('arrival_', 'aa.')
-        .replace('departure_', 'da.');
-
-      whereClause += `${i === 1 ? 'WHERE' : ' AND'} ${tableKey} = $${i}`;
+      whereClause += `${i === 1 ? 'WHERE' : ' AND'} ${key} = $${i}`;
 
       values.push(restParams[key]);
       i++;
@@ -35,23 +31,23 @@ export class FlightsSearchRepository {
             f.id AS flight_id
             ,f."date" AS flight_date
             ,f.cost AS cost
-            ,da.city AS departure_city
-            ,da.country AS departure_country
-            ,da.iata AS departure_airport_iata
+            ,departure_airport.city AS departure_city
+            ,departure_airport.country AS departure_country
+            ,departure_airport.iata AS departure_airport_iata
             ,f.departure_time AS departure_time
             ,f.arrival_time AS arrival_time
-            ,aa.city AS arrival_city
-            ,aa.country AS arrival_country
-            ,aa.iata AS arrival_airport_iata
+            ,arrival_airport.city AS arrival_city
+            ,arrival_airport.country AS arrival_country
+            ,arrival_airport.iata AS arrival_airport_iata
             ,ac.model AS aircraft_model
             ,(ac.seats - COUNT(fd.document_id)) AS available_seats
           FROM flight f 
-          JOIN airport da ON f.departure_airport_id = da.id
-          JOIN airport aa ON f.arrival_airport_id  = aa.id
+          JOIN airport departure_airport ON f.departure_airport_id = departure_airport.id
+          JOIN airport arrival_airport ON f.arrival_airport_id  = arrival_airport.id
           JOIN aircraft ac ON f.aircraft_id = ac.id
           LEFT JOIN flight_document fd ON f.id = fd.flight_id
           ${whereClause}
-          group by f.id, da.city, da.country, da.iata, aa.city, aa.country, aa.iata, ac.model, ac.seats, fd.document_id
+          GROUP BY f.id, departure_airport.city, departure_airport.country, departure_airport.iata, arrival_airport.city, arrival_airport.country, arrival_airport.iata, ac.model, ac.seats, fd.document_id
         ) AS res
         WHERE res.available_seats > ${available_seats} 
       `,

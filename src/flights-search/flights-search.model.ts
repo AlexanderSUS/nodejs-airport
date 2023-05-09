@@ -1,4 +1,4 @@
-import { Expose } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 
 export class FlightsSearchModel {
   date: string;
@@ -30,7 +30,8 @@ export class FlightsSearchModel {
   arrivalAirportIata: string;
 
   @Expose({ name: 'available_seats' })
-  availableSeats: string;
+  @Transform(({ value }) => parseInt(value, 10))
+  availableSeats: number;
 
   @Expose({ name: 'aircraft_model' })
   aircraftModel: string;
