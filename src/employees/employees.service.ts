@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeeRepository } from './employees.repository';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class EmployeesService {
@@ -30,10 +31,13 @@ export class EmployeesService {
   }
 
   async update(id: string, updateEmployeeDto: UpdateEmployeeDto) {
-    const employee = await this.employeesRepository.update(
-      id,
-      updateEmployeeDto,
-    );
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(updateEmployeeDto.password, salt);
+
+    const employee = await this.employeesRepository.update(id, {
+      ...updateEmployeeDto,
+      password: hashedPassword,
+    });
 
     if (!employee) {
       throw new NotFoundException();
