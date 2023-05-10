@@ -1,14 +1,20 @@
 import { FlightsSearchQueryParamsDto } from '../dto/flights-search-query-params.dto';
 
+type BuildWhereParams = Pick<
+  FlightsSearchQueryParamsDto,
+  | 'departure_airport.city'
+  | 'departure_airport.country'
+  | 'arrival_airport.city'
+  | 'arrival_airport.county'
+>;
+
 const getQueriesFilter =
   (substring: string) => (paramObject: FlightsSearchQueryParamsDto) =>
     new Map(
       Object.entries(paramObject).filter(([key]) => key.includes(substring)),
     );
 
-export function buildWhereClause(
-  queryParams: Omit<FlightsSearchQueryParamsDto, 'available_seats'>,
-) {
+export function buildWhereClause(queryParams: BuildWhereParams) {
   const START = 'start_date';
   const END = 'end_date';
 
