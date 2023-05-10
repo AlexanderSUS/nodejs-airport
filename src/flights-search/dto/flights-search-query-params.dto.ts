@@ -11,11 +11,11 @@ import {
 export class FlightsSearchQueryParamsDto {
   @IsDateString()
   @IsOptional()
-  start_date: string;
+  start_date?: string;
 
   @IsDateString()
   @IsOptional()
-  end_date: string;
+  end_date?: string;
 
   @Length(1, 100)
   @IsString()
@@ -41,5 +41,16 @@ export class FlightsSearchQueryParamsDto {
   @Min(1)
   @Transform(({ value }) => parseInt(value, 10))
   @IsOptional()
-  available_seats? = 1;
+  available_seats?: number;
+
+  @Min(0)
+  @Transform(({ value }) => parseInt(value, 10))
+  @IsOptional()
+  offset?: number;
+
+  @Max(500)
+  @Min(1)
+  @Transform(({ value }) => parseInt(value, 10))
+  @IsOptional()
+  limit?: number;
 }

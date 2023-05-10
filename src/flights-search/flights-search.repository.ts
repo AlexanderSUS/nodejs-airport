@@ -4,6 +4,11 @@ import { FlightsSearchQueryParamsDto } from './dto/flights-search-query-params.d
 import { FlightsSearchModel } from './flights-search.model';
 import { plainToInstance } from 'class-transformer';
 import { buildWhereClause } from './util/build-where-clause.util';
+import {
+  DEFAULT_LIMIT,
+  DEFAULT_MIN_AVAILABLE_SEATS,
+  DEFAULT_OFFSET,
+} from './constants';
 
 @Injectable()
 export class FlightsSearchRepository {
@@ -11,12 +16,20 @@ export class FlightsSearchRepository {
     private readonly databaseService: DatabaseService<FlightsSearchModel>,
   ) {}
 
-  async find({ available_seats, ...queryParams }: FlightsSearchQueryParamsDto) {
+  async find({
+    available_seats = DEFAULT_MIN_AVAILABLE_SEATS,
+    offset = DEFAULT_OFFSET,
+    limit = DEFAULT_LIMIT,
+    ...queryParams
+  }: FlightsSearchQueryParamsDto) {
     const { whereClause, values } = buildWhereClause(queryParams);
+
+    let index = values.length + 1;
 
     const databaseResponse = await this.databaseService.runQuery(
       `
         SELECT *
+          ,COUNT(*) OVER() AS total_count
         FROM (
           SELECT
             f.id AS flight_id
@@ -38,13 +51,29 @@ export class FlightsSearchRepository {
           JOIN aircraft ac ON f.aircraft_id = ac.id
           LEFT JOIN flight_document fd ON f.id = fd.flight_id
           ${whereClause}
-          GROUP BY f.id, departure_airport.city, departure_airport.country, departure_airport.iata, arrival_airport.city, arrival_airport.country, arrival_airport.iata, ac.model, ac.seats, fd.document_id
+          GROUP BY 
+            f.id
+            ,departure_airport.city
+            ,departure_airport.country
+            ,departure_airport.iata
+            ,arrival_airport.city
+            ,arrival_airport.country
+            ,arrival_airport.iata
+            ,ac.model
+            ,ac.seats
+            ,fd.document_id
         ) AS res
-        WHERE res.available_seats > ${available_seats}
+        WHERE res.available_seats > $${index++}
+        ORDER BY res.flight_date ASC 
+        OFFSET $${index++} 
+        LIMIT $${index++} 
       `,
-      values,
+      [...values, available_seats, offset, limit],
     );
 
-    return plainToInstance(FlightsSearchModel, databaseResponse.rows);
+    return {
+      total: databaseResponse.rows[0]?.total_count || 0,
+      data: plainToInstance(FlightsSearchModel, databaseResponse.rows),
+    };
   }
 }

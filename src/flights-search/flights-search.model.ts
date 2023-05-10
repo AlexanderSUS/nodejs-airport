@@ -1,4 +1,4 @@
-import { Expose, Transform } from 'class-transformer';
+import { Exclude, Expose, Transform } from 'class-transformer';
 
 export class FlightsSearchModel {
   date: string;
@@ -35,4 +35,7 @@ export class FlightsSearchModel {
 
   @Expose({ name: 'aircraft_model' })
   aircraftModel: string;
+
+  @Exclude()
+  total_count: number;
 }
