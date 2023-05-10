@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAirportDto } from './dto/create-airport.dto';
 import { UpdateAirportDto } from './dto/update-airport.dto';
 import { AirportsRepository } from './airports.repository';
+import { AirportsQueryParamsDto } from './dto/airports-query-params.dto';
 
 @Injectable()
 export class AirportsService {
@@ -11,8 +12,8 @@ export class AirportsService {
     return this.airportsRepository.create(createAirportDto);
   }
 
-  findAll() {
-    return this.airportsRepository.getAll();
+  findAll(airportsQueryParams: AirportsQueryParamsDto) {
+    return this.airportsRepository.getAll(airportsQueryParams);
   }
 
   async findOne(id: string) {

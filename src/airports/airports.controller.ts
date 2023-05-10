@@ -9,10 +9,12 @@ import {
   ParseUUIDPipe,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { AirportsService } from './airports.service';
 import { CreateAirportDto } from './dto/create-airport.dto';
 import { UpdateAirportDto } from './dto/update-airport.dto';
+import { AirportsQueryParamsDto } from './dto/airports-query-params.dto';
 
 @Controller('airports')
 export class AirportsController {
@@ -24,8 +26,8 @@ export class AirportsController {
   }
 
   @Get()
-  findAll() {
-    return this.airportsService.findAll();
+  findAll(@Query() airportsQueryParams: AirportsQueryParamsDto) {
+    return this.airportsService.findAll(airportsQueryParams);
   }
 
   @Get(':id')

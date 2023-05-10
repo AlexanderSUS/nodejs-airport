@@ -3,6 +3,9 @@ import DatabaseService from 'src/database/database.service';
 import { AircraftModel } from './aircraft.model';
 import { CreateAircraftDto } from './dto/create-aircraft.dto';
 import { UpdateAircraftDto } from './dto/update-aircraft.dto';
+import { AircraftQueryParamsDto } from './dto/aircraft-query-params.dto';
+import { plainToInstance } from 'class-transformer';
+import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class AircraftRepository {
@@ -33,12 +36,25 @@ export class AircraftRepository {
     return databaseResponse.rows[0];
   }
 
-  async getAll() {
-    const databaseResponse = await this.databaseService.runQuery(`
-      SELECT * FROM aircraft 
-    `);
+  async getAll({
+    limit = DEFAULT_LIMIT,
+    offset = DEFAULT_OFFSET,
+  }: AircraftQueryParamsDto) {
+    const databaseResponse = await this.databaseService.runQuery(
+      `
+      SELECT *
+        ,COUNT(*) OVER() AS total_count 
+      FROM aircraft 
+      OFFSET $1
+      LIMIT $2
+    `,
+      [offset, limit],
+    );
 
-    return databaseResponse.rows;
+    return {
+      total: databaseResponse.rows[0]?.total_count || 0,
+      data: plainToInstance(AircraftModel, databaseResponse.rows),
+    };
   }
 
   async getById(id: string) {
