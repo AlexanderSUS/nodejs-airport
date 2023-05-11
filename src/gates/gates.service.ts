@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateGateDto } from './dto/create-gate.dto';
 import { UpdateGateDto } from './dto/update-gate.dto';
 import { GatesRepository } from './gates.repository';
+import { GatesQueryParamsDto } from './dto/gates-query-params.dto';
 
 @Injectable()
 export class GatesService {
@@ -11,8 +12,8 @@ export class GatesService {
     return this.gatesRepository.create(createGateDto);
   }
 
-  getAll() {
-    return this.gatesRepository.getAll();
+  getAll(gatesQueryParamsDto: GatesQueryParamsDto) {
+    return this.gatesRepository.getAll(gatesQueryParamsDto);
   }
 
   getOne(id: string) {

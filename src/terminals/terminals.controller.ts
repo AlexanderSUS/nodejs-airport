@@ -9,10 +9,12 @@ import {
   Put,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { TerminalsService } from './terminals.service';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
 import { UpdateTerminalDto } from './dto/update-terminal.dto';
+import { TerminalsQueryParamsDto } from './dto/terminals-query-params.dto';
 
 @Controller('terminals')
 export class TerminalsController {
@@ -24,8 +26,11 @@ export class TerminalsController {
   }
 
   @Get()
-  getAll() {
-    return this.terminalsService.getAll();
+  getAll(
+    @Query()
+    terminalsQueryParams: TerminalsQueryParamsDto,
+  ) {
+    return this.terminalsService.getAll(terminalsQueryParams);
   }
 
   @Get(':id')

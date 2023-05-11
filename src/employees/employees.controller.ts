@@ -9,10 +9,12 @@ import {
   HttpStatus,
   ParseUUIDPipe,
   Put,
+  Query,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
+import { EmployeesQueryParams } from './dto/employees-query-params.dto';
 
 @Controller('employees')
 export class EmployeeController {
@@ -24,8 +26,8 @@ export class EmployeeController {
   }
 
   @Get()
-  getAll() {
-    return this.employeesService.getAll();
+  findAll(@Query() employeesQueryParams: EmployeesQueryParams) {
+    return this.employeesService.getAll(employeesQueryParams);
   }
 
   @Get(':id')

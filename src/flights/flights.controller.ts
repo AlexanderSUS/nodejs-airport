@@ -9,10 +9,12 @@ import {
   Put,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { FlightsService } from './flights.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
+import { FlightsQueryParamsDto } from './dto/flights-query-params.dto';
 
 @Controller('flights')
 export class FlightsController {
@@ -24,8 +26,11 @@ export class FlightsController {
   }
 
   @Get()
-  getAll() {
-    return this.flightsService.getAll();
+  getAll(
+    @Query()
+    flightsQueryParams: FlightsQueryParamsDto,
+  ) {
+    return this.flightsService.getAll(flightsQueryParams);
   }
 
   @Get(':id')

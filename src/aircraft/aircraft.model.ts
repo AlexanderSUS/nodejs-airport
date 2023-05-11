@@ -1,11 +1,8 @@
-import { Exclude } from 'class-transformer';
+import { BaseModel } from 'src/common/base.model';
 
-export class AircraftModel {
+export class AircraftModel extends BaseModel {
   id: string;
   make: string;
   model: string;
   seats: number;
-
-  @Exclude()
-  total_count?: number;
 }

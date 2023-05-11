@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
 import { FlightsRepository } from './flights.repository';
+import { FlightsSearchQueryParamsDto } from 'src/flights-search/dto/flights-search-query-params.dto';
 
 @Injectable()
 export class FlightsService {
@@ -10,8 +11,8 @@ export class FlightsService {
     return this.flightsRepository.create(createFlightDto);
   }
 
-  getAll() {
-    return this.flightsRepository.getAll();
+  getAll(flightsQueryParams: FlightsSearchQueryParamsDto) {
+    return this.flightsRepository.getAll(flightsQueryParams);
   }
 
   getOne(id: string) {

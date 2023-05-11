@@ -4,6 +4,8 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeeModel } from './employees.model';
 import { plainToInstance } from 'class-transformer';
+import { EmployeesQueryParams } from './dto/employees-query-params.dto';
+import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class EmployeeRepository {
@@ -37,12 +39,25 @@ export class EmployeeRepository {
     return plainToInstance(EmployeeModel, databaseResponse.rows[0]);
   }
 
-  async getAll() {
-    const databaseResponse = await this.databaseService.runQuery(`
-      SELECT * FROM employee 
-    `);
+  async getAll({
+    limit = DEFAULT_LIMIT,
+    offset = DEFAULT_OFFSET,
+  }: EmployeesQueryParams) {
+    const databaseResponse = await this.databaseService.runQuery(
+      `
+      SELECT *
+        ,COUNT(*) OVER() AS total_count 
+      FROM employee 
+      OFFSET $1
+      LIMIT $2
+    `,
+      [offset, limit],
+    );
 
-    return plainToInstance(EmployeeModel, databaseResponse.rows);
+    return {
+      total: databaseResponse.rows[0]?.total_count || 0,
+      data: plainToInstance(EmployeeModel, databaseResponse.rows),
+    };
   }
 
   async getById(id: string) {
