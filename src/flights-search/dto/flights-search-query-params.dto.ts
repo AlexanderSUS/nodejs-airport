@@ -7,8 +7,9 @@ import {
   Max,
   Min,
 } from 'class-validator';
+import { BaseQueryParamsDto } from 'src/common/dto/base-query-params.dto';
 
-export class FlightsSearchQueryParamsDto {
+export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
   @IsDateString()
   @IsOptional()
   start_date?: string;
@@ -42,15 +43,4 @@ export class FlightsSearchQueryParamsDto {
   @Transform(({ value }) => parseInt(value, 10))
   @IsOptional()
   available_seats?: number;
-
-  @Min(0)
-  @Transform(({ value }) => parseInt(value, 10))
-  @IsOptional()
-  offset?: number;
-
-  @Max(500)
-  @Min(1)
-  @Transform(({ value }) => parseInt(value, 10))
-  @IsOptional()
-  limit?: number;
 }

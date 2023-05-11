@@ -4,6 +4,8 @@ import { TerminalModel } from './terminal.model';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdateTerminalDto } from './dto/update-terminal.dto';
+import { TerminalsQueryParamsDto } from './dto/terminals-query-params.dto';
+import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class TerminalsRepository {
@@ -28,12 +30,24 @@ export class TerminalsRepository {
     return plainToInstance(TerminalModel, databaseResponse.rows[0]);
   }
 
-  async getAll() {
+  async getAll({
+    limit = DEFAULT_LIMIT,
+    offset = DEFAULT_OFFSET,
+  }: TerminalsQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
-      `SELECT * FROM terminal`,
+      `SELECT *
+        ,COUNT(*) OVER() AS total_count 
+      FROM terminal
+      OFFSET $1
+      LIMIT $2
+    `,
+      [offset, limit],
     );
 
-    return plainToInstance(TerminalModel, databaseResponse.rows);
+    return {
+      total: databaseResponse.rows[0]?.total_count || 0,
+      data: plainToInstance(TerminalModel, databaseResponse.rows),
+    };
   }
 
   async getById(id: string) {

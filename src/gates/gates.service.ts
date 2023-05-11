@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateGateDto } from './dto/create-gate.dto';
 import { UpdateGateDto } from './dto/update-gate.dto';
 import { GatesRepository } from './gates.repository';
+import { GatesQueryParamsDto } from './dto/gates-query-params.dto';
 
 @Injectable()
 export class GatesService {
@@ -11,8 +12,8 @@ export class GatesService {
     return this.gatesRepository.create(createGateDto);
   }
 
-  findAll() {
-    return this.gatesRepository.getAll();
+  findAll(gatesQueryParamsDto: GatesQueryParamsDto) {
+    return this.gatesRepository.getAll(gatesQueryParamsDto);
   }
 
   async findOne(id: string) {

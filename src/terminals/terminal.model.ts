@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
+import { BaseModel } from 'src/common/base.model';
 
-export class TerminalModel {
+export class TerminalModel extends BaseModel {
   id: string;
   name: string;
 

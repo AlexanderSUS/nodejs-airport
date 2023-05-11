@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
+import { BaseModel } from 'src/common/base.model';
 
-export class GatesModel {
+export class GatesModel extends BaseModel {
   id: string;
   number: string;
 

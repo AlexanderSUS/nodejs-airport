@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
+import { BaseModel } from 'src/common/base.model';
 
-export class FlightsModel {
+export class FlightsModel extends BaseModel {
   id: string;
 
   @Expose({ name: 'aircraft_id' })

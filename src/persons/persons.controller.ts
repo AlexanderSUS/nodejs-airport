@@ -7,10 +7,12 @@ import {
   Delete,
   ParseUUIDPipe,
   Put,
+  Query,
 } from '@nestjs/common';
 import { PersonService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { PersonsQueryParamsDto } from './dto/persons-query-params.dto';
 
 @Controller('persons')
 export class PersonController {
@@ -22,8 +24,11 @@ export class PersonController {
   }
 
   @Get()
-  findAll() {
-    return this.personService.findAll();
+  findAll(
+    @Query()
+    personsQueryParams: PersonsQueryParamsDto,
+  ) {
+    return this.personService.findAll(personsQueryParams);
   }
 
   @Get(':id')

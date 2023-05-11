@@ -7,6 +7,7 @@ import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
 import { DocumentRepository } from './document.repository';
 import { PersonService } from 'src/persons/persons.service';
+import { DocumentsQueryParams } from './dto/documents-query-params.dto';
 
 @Injectable()
 export class DocumentService {
@@ -16,6 +17,7 @@ export class DocumentService {
   ) {}
 
   async create(createDocumentDto: CreateDocumentDto) {
+    // TODO: remove this
     const { personId } = createDocumentDto;
 
     const person = await this.personService.findOne(personId);
@@ -29,8 +31,8 @@ export class DocumentService {
     return this.documentRepository.create(createDocumentDto);
   }
 
-  findAll() {
-    return this.documentRepository.getAll();
+  findAll(documentsQueryParams: DocumentsQueryParams) {
+    return this.documentRepository.getAll(documentsQueryParams);
   }
 
   async findOne(id: string) {

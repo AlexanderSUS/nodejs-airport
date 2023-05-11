@@ -9,10 +9,12 @@ import {
   Put,
   HttpStatus,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { GatesService } from './gates.service';
 import { CreateGateDto } from './dto/create-gate.dto';
 import { UpdateGateDto } from './dto/update-gate.dto';
+import { GatesQueryParamsDto } from './dto/gates-query-params.dto';
 
 @Controller('gates')
 export class GatesController {
@@ -25,8 +27,8 @@ export class GatesController {
   }
 
   @Get()
-  findAll() {
-    return this.gatesService.findAll();
+  findAll(@Query() gatesQueryParamsDto: GatesQueryParamsDto) {
+    return this.gatesService.findAll(gatesQueryParamsDto);
   }
 
   @Get(':id')
