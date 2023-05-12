@@ -10,6 +10,7 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FlightsService } from './flights.service';
 import { CreateFlightDto } from './dto/create-flight.dto';
@@ -26,16 +27,16 @@ export class FlightsController {
   }
 
   @Get()
-  findAll(
-    @Query()
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
     flightsQueryParams: FlightsQueryParamsDto,
   ) {
-    return this.flightsService.findAll(flightsQueryParams);
+    return this.flightsService.getAll(flightsQueryParams);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.flightsService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.flightsService.getOne(id);
   }
 
   @Put(':id')

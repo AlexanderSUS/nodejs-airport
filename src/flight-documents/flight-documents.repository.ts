@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { plainToInstance } from 'class-transformer';
 import { FlightDocumentsModel } from './flight-documents.model';
 import { CreateFlightDocumentDto } from './dto/create-flight-document.dto';
 import { UpdateFlightDocumentDto } from './dto/update-flight-document.dto';
+import { FlightDocumentQueryParamsDto } from './dto/flight-documents-query-params.dto';
 
 @Injectable()
 export class FlightDocumentRepository {
@@ -28,11 +29,16 @@ export class FlightDocumentRepository {
     return plainToInstance(FlightDocumentsModel, databaseResponse.rows[0]);
   }
 
-  async getAll() {
+  async getAll(flightDocumentsQueryParams: FlightDocumentQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
       `
-        SELECT * FROM flight_document
+        SELECT *
+          ,COUNT(*) OVER() AS total_count 
+        FROM flight_document
+        OFFSET $1
+        LIMIT $2
       `,
+      [flightDocumentsQueryParams.offset, flightDocumentsQueryParams.limit],
     );
 
     return plainToInstance(FlightDocumentsModel, databaseResponse.rows);
@@ -58,15 +64,29 @@ export class FlightDocumentRepository {
       ],
     );
 
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(FlightDocumentsModel, databaseResponse.rows[0]);
   }
 
   async delete(flightId: string, documentId: string) {
-    await this.databaseService.runQuery(
+    const databaseResponse = await this.databaseService.runQuery(
       `
-        DELETE FROM flight_document WHERE flight_id = $1 AND document_id = $2
+        DELETE FROM flight_document 
+        WHERE flight_id = $1 AND document_id = $2
+        RETURNING *
       `,
       [flightId, documentId],
     );
+
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
   }
 }

@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { FlightsModel } from './flights.model';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdateFlightDto } from './dto/update-flight.dto';
 import { FlightsQueryParamsDto } from './dto/flights-query-params.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class FlightsRepository {
@@ -60,10 +59,8 @@ export class FlightsRepository {
     return plainToInstance(FlightsModel, databaseResponse.rows[0]);
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: FlightsQueryParamsDto) {
+  async getAll(flightsQueryParams: FlightsQueryParamsDto) {
+    console.log(flightsQueryParams);
     const databaseResponse = await this.databaseService.runQuery(
       `
         SELECT * 
@@ -72,7 +69,7 @@ export class FlightsRepository {
         OFFSET $1
         LIMIT $2
     `,
-      [offset, limit],
+      [flightsQueryParams.offset, flightsQueryParams.limit],
     );
 
     return {
@@ -90,6 +87,10 @@ export class FlightsRepository {
     );
 
     const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
 
     return plainToInstance(FlightsModel, entity);
   }
@@ -129,15 +130,27 @@ export class FlightsRepository {
 
     const [entity] = databaseResponse.rows;
 
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(FlightsModel, entity);
   }
 
   async delete(id: string) {
-    await this.databaseService.runQuery(
+    const databaseResponse = await this.databaseService.runQuery(
       `
-    DELETE FROM flight WHERE id = $1
-    `,
+        DELETE FROM flight
+        WHERE id = $1
+        RETURNING *
+      `,
       [id],
     );
+
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
   }
 }

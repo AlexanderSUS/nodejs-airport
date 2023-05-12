@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { TerminalModel } from './terminal.model';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdateTerminalDto } from './dto/update-terminal.dto';
 import { TerminalsQueryParamsDto } from './dto/terminals-query-params.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class TerminalsRepository {
@@ -30,10 +29,7 @@ export class TerminalsRepository {
     return plainToInstance(TerminalModel, databaseResponse.rows[0]);
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: TerminalsQueryParamsDto) {
+  async getAll(terminalQueryParams: TerminalsQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
       `SELECT *
         ,COUNT(*) OVER() AS total_count 
@@ -41,7 +37,7 @@ export class TerminalsRepository {
       OFFSET $1
       LIMIT $2
     `,
-      [offset, limit],
+      [terminalQueryParams.offset, terminalQueryParams.limit],
     );
 
     return {
@@ -57,6 +53,10 @@ export class TerminalsRepository {
     );
 
     const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
 
     return plainToInstance(TerminalModel, entity);
   }
@@ -74,14 +74,27 @@ export class TerminalsRepository {
 
     const [entity] = databaseResponse.rows;
 
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(TerminalModel, entity);
   }
 
   async delete(id: string) {
-    await this.databaseService.runQuery(
+    const databaseResponse = await this.databaseService.runQuery(
       `
-      DELETE FROM terminal WHERE id = $1`,
+        DELETE FROM terminal 
+        WHERE id = $1
+        RETURNING *
+      `,
       [id],
     );
+
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
   }
 }

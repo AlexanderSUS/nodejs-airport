@@ -10,6 +10,7 @@ import {
   ParseUUIDPipe,
   Put,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
@@ -26,12 +27,15 @@ export class EmployeeController {
   }
 
   @Get()
-  findAll(@Query() employeesQueryParams: EmployeesQueryParams) {
-    return this.employeesService.findAll(employeesQueryParams);
+  findAll(
+    @Query(new ValidationPipe({ transform: true }))
+    employeesQueryParams: EmployeesQueryParams,
+  ) {
+    return this.employeesService.getAll(employeesQueryParams);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.employeesService.findOneById(id);
   }
 

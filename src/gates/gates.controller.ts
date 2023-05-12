@@ -10,6 +10,7 @@ import {
   HttpStatus,
   HttpCode,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { GatesService } from './gates.service';
 import { CreateGateDto } from './dto/create-gate.dto';
@@ -27,13 +28,16 @@ export class GatesController {
   }
 
   @Get()
-  findAll(@Query() gatesQueryParamsDto: GatesQueryParamsDto) {
-    return this.gatesService.findAll(gatesQueryParamsDto);
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    gatesQueryParamsDto: GatesQueryParamsDto,
+  ) {
+    return this.gatesService.getAll(gatesQueryParamsDto);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.gatesService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.gatesService.getOne(id);
   }
 
   @Put(':id')

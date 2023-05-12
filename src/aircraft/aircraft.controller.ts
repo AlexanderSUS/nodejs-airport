@@ -10,6 +10,7 @@ import {
   HttpCode,
   Put,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AircraftService } from './aircraft.service';
 import { CreateAircraftDto } from './dto/create-aircraft.dto';
@@ -37,14 +38,17 @@ export class AircraftController {
 
   @AppApiOkResponseWONotFoundExceptionDecorator({ type: [AircraftResponseDto] })
   @Get()
-  findAll(@Query() aircraftQueryParams: AircraftQueryParamsDto) {
-    return this.aircraftService.findAll(aircraftQueryParams);
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    aircraftQueryParams: AircraftQueryParamsDto,
+  ) {
+    return this.aircraftService.getAll(aircraftQueryParams);
   }
 
   @AppApiOkResponseDecorator({ type: AircraftResponseDto })
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.aircraftService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.aircraftService.getOne(id);
   }
 
   @AppApiOkResponseDecorator({ type: AircraftResponseDto })

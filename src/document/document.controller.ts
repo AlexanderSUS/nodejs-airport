@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Put,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { DocumentService } from './document.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
@@ -24,16 +25,16 @@ export class DocumentController {
   }
 
   @Get()
-  findAll(
-    @Query()
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
     documentsQueryParams: DocumentsQueryParams,
   ) {
-    return this.documentService.findAll(documentsQueryParams);
+    return this.documentService.getAll(documentsQueryParams);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.documentService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.documentService.getOne(id);
   }
 
   @Put(':id')

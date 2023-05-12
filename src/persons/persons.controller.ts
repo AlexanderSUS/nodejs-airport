@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Put,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PersonService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
@@ -24,16 +25,16 @@ export class PersonController {
   }
 
   @Get()
-  findAll(
-    @Query()
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
     personsQueryParams: PersonsQueryParamsDto,
   ) {
-    return this.personService.findAll(personsQueryParams);
+    return this.personService.getAll(personsQueryParams);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.personService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.personService.getOne(id);
   }
 
   @Put(':id')

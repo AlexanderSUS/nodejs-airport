@@ -12,11 +12,11 @@ export class PersonService {
     return this.personRepository.create(createPersonDto);
   }
 
-  findAll(personsQueryParams: PersonsQueryParamsDto) {
+  getAll(personsQueryParams: PersonsQueryParamsDto) {
     return this.personRepository.getAll(personsQueryParams);
   }
 
-  findOne(id: string) {
+  getOne(id: string) {
     return this.personRepository.getById(id);
   }
 

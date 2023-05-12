@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
 import { UpdateTerminalDto } from './dto/update-terminal.dto';
 import { TerminalsRepository } from './terminals.repository';
@@ -12,34 +12,19 @@ export class TerminalsService {
     return this.terminalsRepository.create(createTerminalDto);
   }
 
-  findAll(terminalQueryParams: TerminalsQueryParamsDto) {
+  getAll(terminalQueryParams: TerminalsQueryParamsDto) {
     return this.terminalsRepository.getAll(terminalQueryParams);
   }
 
-  async findOne(id: string) {
-    const terminal = await this.terminalsRepository.getById(id);
-
-    if (!terminal) {
-      throw new NotFoundException();
-    }
-
-    return terminal;
+  getOne(id: string) {
+    return this.terminalsRepository.getById(id);
   }
 
   async update(id: string, updateTerminalDto: UpdateTerminalDto) {
-    const terminal = await this.terminalsRepository.update(
-      id,
-      updateTerminalDto,
-    );
-
-    if (!terminal) {
-      throw new NotFoundException();
-    }
-
-    return terminal;
+    return this.terminalsRepository.update(id, updateTerminalDto);
   }
 
-  async remove(id: string) {
-    await this.terminalsRepository.delete(id);
+  remove(id: string) {
+    return this.terminalsRepository.delete(id);
   }
 }

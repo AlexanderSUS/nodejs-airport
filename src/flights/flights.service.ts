@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { UpdateFlightDto } from './dto/update-flight.dto';
 import { FlightsRepository } from './flights.repository';
@@ -11,31 +11,19 @@ export class FlightsService {
     return this.flightsRepository.create(createFlightDto);
   }
 
-  findAll(flightsQueryParams: FlightsSearchQueryParamsDto) {
+  getAll(flightsQueryParams: FlightsSearchQueryParamsDto) {
     return this.flightsRepository.getAll(flightsQueryParams);
   }
 
-  async findOne(id: string) {
-    const flight = await this.flightsRepository.getById(id);
-
-    if (!flight) {
-      throw new NotFoundException();
-    }
-
-    return flight;
+  getOne(id: string) {
+    return this.flightsRepository.getById(id);
   }
 
-  async update(id: string, updateFlightDto: UpdateFlightDto) {
-    const flight = await this.flightsRepository.getById(id);
-
-    if (!flight) {
-      throw new NotFoundException();
-    }
-
+  update(id: string, updateFlightDto: UpdateFlightDto) {
     return this.flightsRepository.update(id, updateFlightDto);
   }
 
-  async remove(id: string) {
-    await this.flightsRepository.delete(id);
+  remove(id: string) {
+    return this.flightsRepository.delete(id);
   }
 }

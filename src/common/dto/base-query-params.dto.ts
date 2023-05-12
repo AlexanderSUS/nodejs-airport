@@ -11,7 +11,7 @@ export class BaseQueryParamsDto {
   @Min(0)
   @Transform(({ value }) => parseInt(value, 10))
   @IsOptional()
-  offset? = DEFAULT_OFFSET;
+  offset?: number = DEFAULT_OFFSET;
 
   @ApiProperty({
     required: false,
@@ -21,5 +21,5 @@ export class BaseQueryParamsDto {
   @Min(1)
   @Transform(({ value }) => parseInt(value, 10))
   @IsOptional()
-  limit? = DEFAULT_LIMIT;
+  limit?: number = DEFAULT_LIMIT;
 }

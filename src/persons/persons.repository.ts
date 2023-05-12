@@ -1,11 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { PersonsModel } from './persons.model';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { PersonsQueryParamsDto } from './dto/persons-query-params.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class PersonRepository {
@@ -30,10 +29,7 @@ export class PersonRepository {
     return plainToInstance(PersonsModel, databaseResponse.rows[0]);
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: PersonsQueryParamsDto) {
+  async getAll(personsQueryParams: PersonsQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
       `
         SELECT *
@@ -42,7 +38,7 @@ export class PersonRepository {
         OFFSET $1
         LIMIT $2
       `,
-      [offset, limit],
+      [personsQueryParams.offset, personsQueryParams.limit],
     );
 
     return {
@@ -59,6 +55,11 @@ export class PersonRepository {
     );
 
     const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(PersonsModel, entity);
   }
 
@@ -75,10 +76,27 @@ export class PersonRepository {
 
     const [entity] = databaseResponse.rows;
 
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(PersonsModel, entity);
   }
 
   async delete(id: string) {
-    await this.databaseService.runQuery(`DELETE FROM person WHERE id=$1`, [id]);
+    const databaseResponse = await this.databaseService.runQuery(
+      `
+        DELETE FROM person 
+        WHERE id=$1
+        RETURNING *
+      `,
+      [id],
+    );
+
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
   }
 }

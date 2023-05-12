@@ -8,6 +8,7 @@ import {
   Min,
 } from 'class-validator';
 import { BaseQueryParamsDto } from 'src/common/dto/base-query-params.dto';
+import { DEFAULT_MIN_AVAILABLE_SEATS } from '../constants';
 
 export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
   @IsDateString()
@@ -42,5 +43,5 @@ export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
   @Min(1)
   @Transform(({ value }) => parseInt(value, 10))
   @IsOptional()
-  available_seats?: number;
+  available_seats?: number = DEFAULT_MIN_AVAILABLE_SEATS;
 }

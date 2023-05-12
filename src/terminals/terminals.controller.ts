@@ -10,6 +10,7 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { TerminalsService } from './terminals.service';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
@@ -26,16 +27,16 @@ export class TerminalsController {
   }
 
   @Get()
-  findAll(
-    @Query()
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
     terminalsQueryParams: TerminalsQueryParamsDto,
   ) {
-    return this.terminalsService.findAll(terminalsQueryParams);
+    return this.terminalsService.getAll(terminalsQueryParams);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.terminalsService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.terminalsService.getOne(id);
   }
 
   @Put(':id')
