@@ -4,7 +4,6 @@ import { AirportModel } from './airport.model';
 import { CreateAirportDto } from './dto/create-airport.dto';
 import { UpdateAirportDto } from './dto/update-airport.dto';
 import { AirportsQueryParamsDto } from './dto/airports-query-params.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
@@ -39,10 +38,7 @@ export class AirportsRepository {
     return databaseResponse.rows[0];
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: AirportsQueryParamsDto) {
+  async getAll(airportQueryParams: AirportsQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
       `SELECT * 
         ,COUNT(*) OVER() AS total_count 
@@ -50,7 +46,7 @@ export class AirportsRepository {
       OFFSET $1
       LIMIT $2
       `,
-      [offset, limit],
+      [airportQueryParams.offset, airportQueryParams.limit],
     );
 
     return {

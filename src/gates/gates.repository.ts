@@ -5,7 +5,6 @@ import { CreateGateDto } from './dto/create-gate.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdateGateDto } from './dto/update-gate.dto';
 import { GatesQueryParamsDto } from './dto/gates-query-params.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class GatesRepository {
@@ -30,10 +29,7 @@ export class GatesRepository {
     return plainToInstance(GatesModel, databaseResponse.rows[0]);
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: GatesQueryParamsDto) {
+  async getAll(gatesQueryParams: GatesQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
       `
       SELECT *
@@ -42,7 +38,7 @@ export class GatesRepository {
       OFFSET $1
       LIMIT $2
     `,
-      [offset, limit],
+      [gatesQueryParams.offset, gatesQueryParams.limit],
     );
 
     return {

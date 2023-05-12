@@ -5,7 +5,6 @@ import { CreateAircraftDto } from './dto/create-aircraft.dto';
 import { UpdateAircraftDto } from './dto/update-aircraft.dto';
 import { AircraftQueryParamsDto } from './dto/aircraft-query-params.dto';
 import { plainToInstance } from 'class-transformer';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class AircraftRepository {
@@ -36,10 +35,7 @@ export class AircraftRepository {
     return databaseResponse.rows[0];
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: AircraftQueryParamsDto) {
+  async getAll(aircraftQueryParams: AircraftQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
       `
       SELECT *
@@ -48,7 +44,7 @@ export class AircraftRepository {
       OFFSET $1
       LIMIT $2
     `,
-      [offset, limit],
+      [aircraftQueryParams.offset, aircraftQueryParams.limit],
     );
 
     return {

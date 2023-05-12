@@ -5,7 +5,6 @@ import { FlightDocumentsModel } from './flight-documents.model';
 import { CreateFlightDocumentDto } from './dto/create-flight-document.dto';
 import { UpdateFlightDocumentDto } from './dto/update-flight-document.dto';
 import { FlightDocumentQueryParamsDto } from './dto/flight-documents-query-params.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class FlightDocumentRepository {
@@ -30,10 +29,7 @@ export class FlightDocumentRepository {
     return plainToInstance(FlightDocumentsModel, databaseResponse.rows[0]);
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: FlightDocumentQueryParamsDto) {
+  async getAll(flightDocumentsQueryParams: FlightDocumentQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
       `
         SELECT *
@@ -42,7 +38,7 @@ export class FlightDocumentRepository {
         OFFSET $1
         LIMIT $2
       `,
-      [offset, limit],
+      [flightDocumentsQueryParams.offset, flightDocumentsQueryParams.limit],
     );
 
     return plainToInstance(FlightDocumentsModel, databaseResponse.rows);

@@ -5,7 +5,6 @@ import { CreatePersonDto } from './dto/create-person.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { PersonsQueryParamsDto } from './dto/persons-query-params.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class PersonRepository {
@@ -30,10 +29,7 @@ export class PersonRepository {
     return plainToInstance(PersonsModel, databaseResponse.rows[0]);
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: PersonsQueryParamsDto) {
+  async getAll(personsQueryParams: PersonsQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
       `
         SELECT *
@@ -42,7 +38,7 @@ export class PersonRepository {
         OFFSET $1
         LIMIT $2
       `,
-      [offset, limit],
+      [personsQueryParams.offset, personsQueryParams.limit],
     );
 
     return {

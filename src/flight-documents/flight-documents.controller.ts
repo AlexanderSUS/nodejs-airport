@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Put,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FlightDocumentsService } from './flight-documents.service';
 import { CreateFlightDocumentDto } from './dto/create-flight-document.dto';
@@ -26,7 +27,10 @@ export class FlightDocumentsController {
   }
 
   @Get()
-  getAll(@Query() flightDocumentQueryParams: FlightDocumentQueryParamsDto) {
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    flightDocumentQueryParams: FlightDocumentQueryParamsDto,
+  ) {
     return this.flightDocumentsService.getAll(flightDocumentQueryParams);
   }
 

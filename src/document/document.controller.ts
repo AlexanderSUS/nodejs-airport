@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   Put,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { DocumentService } from './document.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
@@ -25,7 +26,7 @@ export class DocumentController {
 
   @Get()
   getAll(
-    @Query()
+    @Query(new ValidationPipe({ transform: true }))
     documentsQueryParams: DocumentsQueryParams,
   ) {
     return this.documentService.getAll(documentsQueryParams);

@@ -4,8 +4,6 @@ import { FlightsSearchQueryParamsDto } from './dto/flights-search-query-params.d
 import { FlightsSearchModel } from './flights-search.model';
 import { plainToInstance } from 'class-transformer';
 import { buildWhereClause } from './util/build-where-clause.util';
-import { DEFAULT_MIN_AVAILABLE_SEATS } from './constants';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class FlightsSearchRepository {
@@ -14,9 +12,9 @@ export class FlightsSearchRepository {
   ) {}
 
   async find({
-    available_seats = DEFAULT_MIN_AVAILABLE_SEATS,
-    offset = DEFAULT_OFFSET,
-    limit = DEFAULT_LIMIT,
+    available_seats,
+    offset,
+    limit,
     ...queryParams
   }: FlightsSearchQueryParamsDto) {
     const { whereClause, values } = buildWhereClause(queryParams);

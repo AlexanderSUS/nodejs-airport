@@ -10,6 +10,7 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AirportsService } from './airports.service';
 import { CreateAirportDto } from './dto/create-airport.dto';
@@ -26,7 +27,10 @@ export class AirportsController {
   }
 
   @Get()
-  getAll(@Query() airportsQueryParams: AirportsQueryParamsDto) {
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    airportsQueryParams: AirportsQueryParamsDto,
+  ) {
     return this.airportsService.getAll(airportsQueryParams);
   }
 

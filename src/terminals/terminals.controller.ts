@@ -10,6 +10,7 @@ import {
   HttpCode,
   HttpStatus,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { TerminalsService } from './terminals.service';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
@@ -27,7 +28,7 @@ export class TerminalsController {
 
   @Get()
   getAll(
-    @Query()
+    @Query(new ValidationPipe({ transform: true }))
     terminalsQueryParams: TerminalsQueryParamsDto,
   ) {
     return this.terminalsService.getAll(terminalsQueryParams);

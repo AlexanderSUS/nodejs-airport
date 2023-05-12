@@ -5,7 +5,6 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeeModel } from './employees.model';
 import { plainToInstance } from 'class-transformer';
 import { EmployeesQueryParams } from './dto/employees-query-params.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 
 @Injectable()
 export class EmployeeRepository {
@@ -39,10 +38,7 @@ export class EmployeeRepository {
     return plainToInstance(EmployeeModel, databaseResponse.rows[0]);
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: EmployeesQueryParams) {
+  async getAll(employeesQueryParams: EmployeesQueryParams) {
     const databaseResponse = await this.databaseService.runQuery(
       `
       SELECT *
@@ -51,7 +47,7 @@ export class EmployeeRepository {
       OFFSET $1
       LIMIT $2
     `,
-      [offset, limit],
+      [employeesQueryParams.offset, employeesQueryParams.limit],
     );
 
     return {

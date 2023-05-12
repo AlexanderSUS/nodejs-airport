@@ -4,7 +4,6 @@ import { DocumentModel } from './document.model';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdateDocumentDto } from './dto/update-document.dto';
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from 'src/common/default-params.const';
 import { DocumentsQueryParams } from './dto/documents-query-params.dto';
 
 @Injectable()
@@ -30,10 +29,7 @@ export class DocumentRepository {
     return plainToInstance(DocumentModel, databaseResponse.rows[0]);
   }
 
-  async getAll({
-    limit = DEFAULT_LIMIT,
-    offset = DEFAULT_OFFSET,
-  }: DocumentsQueryParams) {
+  async getAll(documentsQueryParams: DocumentsQueryParams) {
     const databaseResponse = await this.databaseService.runQuery(
       `
       SELECT *
@@ -42,7 +38,7 @@ export class DocumentRepository {
       OFFSET $1
       LIMIT $2
     `,
-      [offset, limit],
+      [documentsQueryParams.offset, documentsQueryParams.limit],
     );
 
     return {

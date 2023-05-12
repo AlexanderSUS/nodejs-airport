@@ -10,6 +10,7 @@ import {
   HttpStatus,
   HttpCode,
   Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { GatesService } from './gates.service';
 import { CreateGateDto } from './dto/create-gate.dto';
@@ -27,7 +28,10 @@ export class GatesController {
   }
 
   @Get()
-  getAll(@Query() gatesQueryParamsDto: GatesQueryParamsDto) {
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    gatesQueryParamsDto: GatesQueryParamsDto,
+  ) {
     return this.gatesService.getAll(gatesQueryParamsDto);
   }
 
