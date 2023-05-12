@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { plainToInstance } from 'class-transformer';
 import { FlightDocumentsModel } from './flight-documents.model';
@@ -58,15 +58,29 @@ export class FlightDocumentRepository {
       ],
     );
 
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(FlightDocumentsModel, databaseResponse.rows[0]);
   }
 
   async delete(flightId: string, documentId: string) {
-    await this.databaseService.runQuery(
+    const databaseResponse = await this.databaseService.runQuery(
       `
-        DELETE FROM flight_document WHERE flight_id = $1 AND document_id = $2
+        DELETE FROM flight_document 
+        WHERE flight_id = $1 AND document_id = $2
+        RETURNING *
       `,
       [flightId, documentId],
     );
+
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
   }
 }

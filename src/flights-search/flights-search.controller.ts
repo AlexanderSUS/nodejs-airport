@@ -7,7 +7,7 @@ export class FlightsSearchController {
   constructor(private readonly flightsSearchService: FlightsSearchService) {}
 
   @Get()
-  findAll(
+  getAll(
     @Query(
       new ValidationPipe({
         forbidUnknownValues: true,
@@ -17,6 +17,6 @@ export class FlightsSearchController {
     )
     flightSearchQueryParams: FlightsSearchQueryParamsDto,
   ) {
-    return this.flightsSearchService.findAll(flightSearchQueryParams);
+    return this.flightsSearchService.getAll(flightSearchQueryParams);
   }
 }

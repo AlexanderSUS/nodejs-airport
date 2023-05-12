@@ -25,13 +25,13 @@ export class GatesController {
   }
 
   @Get()
-  findAll() {
-    return this.gatesService.findAll();
+  getAll() {
+    return this.gatesService.getAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.gatesService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.gatesService.getOne(id);
   }
 
   @Put(':id')

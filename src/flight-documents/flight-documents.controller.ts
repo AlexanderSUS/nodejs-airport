@@ -24,7 +24,7 @@ export class FlightDocumentsController {
   }
 
   @Get()
-  findAll() {
+  getAll() {
     return this.flightDocumentsService.getAll();
   }
 

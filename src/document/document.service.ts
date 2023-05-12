@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
 import { DocumentRepository } from './document.repository';
@@ -16,44 +12,19 @@ export class DocumentService {
   ) {}
 
   async create(createDocumentDto: CreateDocumentDto) {
-    const { personId } = createDocumentDto;
-
-    const person = await this.personService.findOne(personId);
-
-    if (!person) {
-      throw new BadRequestException(
-        `Person with id ${personId} does not exist`,
-      );
-    }
-
     return this.documentRepository.create(createDocumentDto);
   }
 
-  findAll() {
+  getAll() {
     return this.documentRepository.getAll();
   }
 
-  async findOne(id: string) {
-    const document = await this.documentRepository.getById(id);
-
-    if (!document) {
-      throw new NotFoundException();
-    }
-
-    return document;
+  getOne(id: string) {
+    return this.documentRepository.getById(id);
   }
 
-  async update(id: string, updateDocumentDto: UpdateDocumentDto) {
-    const document = await this.documentRepository.update(
-      id,
-      updateDocumentDto,
-    );
-
-    if (!document) {
-      throw new NotFoundException();
-    }
-
-    return document;
+  update(id: string, updateDocumentDto: UpdateDocumentDto) {
+    return this.documentRepository.update(id, updateDocumentDto);
   }
 
   remove(id: string) {

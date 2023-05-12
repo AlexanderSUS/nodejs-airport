@@ -24,12 +24,12 @@ export class EmployeeController {
   }
 
   @Get()
-  findAll() {
-    return this.employeesService.findAll();
+  getAll() {
+    return this.employeesService.getAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     return this.employeesService.findOneById(id);
   }
 

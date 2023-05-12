@@ -24,13 +24,13 @@ export class TerminalsController {
   }
 
   @Get()
-  findAll() {
-    return this.terminalsService.findAll();
+  getAll() {
+    return this.terminalsService.getAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.terminalsService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.terminalsService.getOne(id);
   }
 
   @Put(':id')

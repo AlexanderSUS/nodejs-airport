@@ -11,11 +11,11 @@ export class PersonService {
     return this.personRepository.create(createPersonDto);
   }
 
-  findAll() {
+  getAll() {
     return this.personRepository.getAll();
   }
 
-  findOne(id: string) {
+  getOne(id: string) {
     return this.personRepository.getById(id);
   }
 

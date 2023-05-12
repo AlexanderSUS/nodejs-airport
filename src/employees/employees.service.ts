@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeeRepository } from './employees.repository';
@@ -12,18 +12,12 @@ export class EmployeesService {
     return this.employeesRepository.create(createEmployeeDto);
   }
 
-  findAll() {
+  getAll() {
     return this.employeesRepository.getAll();
   }
 
-  async findOneById(id: string) {
-    const employee = await this.employeesRepository.getById(id);
-
-    if (!employee) {
-      throw new NotFoundException();
-    }
-
-    return employee;
+  findOneById(id: string) {
+    return this.employeesRepository.getById(id);
   }
 
   findOneByEmail(email: string) {
@@ -34,19 +28,13 @@ export class EmployeesService {
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(updateEmployeeDto.password, salt);
 
-    const employee = await this.employeesRepository.update(id, {
+    return this.employeesRepository.update(id, {
       ...updateEmployeeDto,
       password: hashedPassword,
     });
-
-    if (!employee) {
-      throw new NotFoundException();
-    }
-
-    return employee;
   }
 
-  async remove(id: string) {
-    await this.employeesRepository.delete(id);
+  remove(id: string) {
+    return this.employeesRepository.delete(id);
   }
 }

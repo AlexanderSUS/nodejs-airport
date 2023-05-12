@@ -11,11 +11,11 @@ export class AircraftService {
     return this.aircraftRepository.create(createAircraftDto);
   }
 
-  findAll() {
+  getAll() {
     return this.aircraftRepository.getAll();
   }
 
-  findOne(id: string) {
+  getOne(id: string) {
     return this.aircraftRepository.getById(id);
   }
 
@@ -23,7 +23,7 @@ export class AircraftService {
     return this.aircraftRepository.update(id, updateAircraftDto);
   }
 
-  async remove(id: string) {
-    await this.aircraftRepository.delete(id);
+  remove(id: string) {
+    return this.aircraftRepository.delete(id);
   }
 }

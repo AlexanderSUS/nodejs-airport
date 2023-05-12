@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { TerminalModel } from './terminal.model';
 import { CreateTerminalDto } from './dto/create-terminal.dto';
@@ -44,6 +44,10 @@ export class TerminalsRepository {
 
     const [entity] = databaseResponse.rows;
 
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(TerminalModel, entity);
   }
 
@@ -60,14 +64,27 @@ export class TerminalsRepository {
 
     const [entity] = databaseResponse.rows;
 
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(TerminalModel, entity);
   }
 
   async delete(id: string) {
-    await this.databaseService.runQuery(
+    const databaseResponse = await this.databaseService.runQuery(
       `
-      DELETE FROM terminal WHERE id = $1`,
+        DELETE FROM terminal 
+        WHERE id = $1
+        RETURNING *
+      `,
       [id],
     );
+
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
   }
 }

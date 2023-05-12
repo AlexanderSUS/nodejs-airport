@@ -24,13 +24,13 @@ export class FlightsController {
   }
 
   @Get()
-  findAll() {
-    return this.flightsService.findAll();
+  getAll() {
+    return this.flightsService.getAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.flightsService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.flightsService.getOne(id);
   }
 
   @Put(':id')

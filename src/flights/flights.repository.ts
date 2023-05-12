@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { FlightsModel } from './flights.model';
 import { CreateFlightDto } from './dto/create-flight.dto';
@@ -78,6 +78,10 @@ export class FlightsRepository {
 
     const [entity] = databaseResponse.rows;
 
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(FlightsModel, entity);
   }
 
@@ -116,15 +120,27 @@ export class FlightsRepository {
 
     const [entity] = databaseResponse.rows;
 
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(FlightsModel, entity);
   }
 
   async delete(id: string) {
-    await this.databaseService.runQuery(
+    const databaseResponse = await this.databaseService.runQuery(
       `
-    DELETE FROM flight WHERE id = $1
-    `,
+        DELETE FROM flight
+        WHERE id = $1
+        RETURNING *
+      `,
       [id],
     );
+
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
   }
 }

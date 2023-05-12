@@ -22,13 +22,13 @@ export class DocumentController {
   }
 
   @Get()
-  findAll() {
-    return this.documentService.findAll();
+  getAll() {
+    return this.documentService.getAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.documentService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.documentService.getOne(id);
   }
 
   @Put(':id')

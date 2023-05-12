@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateGateDto } from './dto/create-gate.dto';
 import { UpdateGateDto } from './dto/update-gate.dto';
 import { GatesRepository } from './gates.repository';
@@ -11,31 +11,19 @@ export class GatesService {
     return this.gatesRepository.create(createGateDto);
   }
 
-  findAll() {
+  getAll() {
     return this.gatesRepository.getAll();
   }
 
-  async findOne(id: string) {
-    const gate = await this.gatesRepository.findOneById(id);
-
-    if (!gate) {
-      throw new NotFoundException();
-    }
-
-    return gate;
+  getOne(id: string) {
+    return this.gatesRepository.findOneById(id);
   }
 
-  async update(id: string, updateGateDto: UpdateGateDto) {
-    const updatedGate = await this.gatesRepository.update(id, updateGateDto);
-
-    if (!updatedGate) {
-      throw new NotFoundException();
-    }
-
-    return updatedGate;
+  update(id: string, updateGateDto: UpdateGateDto) {
+    return this.gatesRepository.update(id, updateGateDto);
   }
 
-  async remove(id: string) {
-    await this.gatesRepository.delete(id);
+  remove(id: string) {
+    return this.gatesRepository.delete(id);
   }
 }

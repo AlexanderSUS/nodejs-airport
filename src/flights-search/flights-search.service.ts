@@ -8,7 +8,7 @@ export class FlightsSearchService {
     private readonly flightsSearchRepository: FlightsSearchRepository,
   ) {}
 
-  findAll(flightsQueryParamsDto: FlightsSearchQueryParamsDto) {
+  getAll(flightsQueryParamsDto: FlightsSearchQueryParamsDto) {
     return this.flightsSearchRepository.find(flightsQueryParamsDto);
   }
 }

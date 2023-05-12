@@ -24,13 +24,13 @@ export class AirportsController {
   }
 
   @Get()
-  findAll() {
-    return this.airportsService.findAll();
+  getAll() {
+    return this.airportsService.getAll();
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
-    return this.airportsService.findOne(id);
+  getOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
+    return this.airportsService.getOne(id);
   }
 
   @Put(':id')

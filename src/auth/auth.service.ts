@@ -30,20 +30,20 @@ export class AuthService {
   }
 
   async logIn({ email, password }: LoginDto) {
-    const user = await this.employeesService.findOneByEmail(email);
+    try {
+      const user = await this.employeesService.findOneByEmail(email);
 
-    if (!user) {
+      const { password: hashedPassword } = user;
+      const isPasswordMatch = await bcrypt.compare(password, hashedPassword);
+
+      if (!isPasswordMatch) {
+        throw new Error();
+      }
+
+      return this.tokenService.getTokens(user.id);
+    } catch (err) {
       throw new BadRequestException('Invalid credentials');
     }
-
-    const { password: hashedPassword } = user;
-    const isPasswordMatch = await bcrypt.compare(password, hashedPassword);
-
-    if (!isPasswordMatch) {
-      throw new BadRequestException('Invalid credentials');
-    }
-
-    return this.tokenService.getTokens(user.id);
   }
 
   async refresh(refreshToken: string) {
