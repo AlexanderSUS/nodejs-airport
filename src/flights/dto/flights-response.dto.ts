@@ -1,81 +1,64 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsUUID,
-  IsString,
-  IsDateString,
-  IsNumber,
-  Max,
-  Min,
-} from 'class-validator';
+import { FlightsModel } from '../flights.model';
 
-export class CreateFlightDto {
+export class FlightsResponseDto implements FlightsModel {
   @ApiProperty({
-    example: '2023-05-07',
+    example: '86253827-6015-4e60-a98f-74ca0dd60d6e',
   })
-  @IsDateString()
-  date: Date;
+  id: string;
 
   @ApiProperty({
-    example: 499.0,
+    example: '2023-05-07T00:00:00.000Z',
   })
-  @Max(1000000)
-  @Min(0.01)
-  @IsNumber({
-    maxDecimalPlaces: 2,
+  date: string;
+
+  @ApiProperty({
+    example: '$499.99',
   })
-  cost: number;
+  cost: string;
 
   @ApiProperty({
     example: '86253827-6015-4e60-a98f-74ca0dd60dae',
   })
-  @IsUUID('4')
   aircraftId: string;
 
   @ApiProperty({
     example: '09:00',
   })
-  @IsString()
   departureTime: string;
 
   @ApiProperty({
     example: '12:00',
   })
-  @IsString()
   arrivalTime: string;
 
   @ApiProperty({
     example: '86253827-6011-4e60-a98f-74ca0dd60dae',
   })
-  @IsUUID()
   departureAirportId: string;
 
   @ApiProperty({
     example: '86253827-6011-4e60-a98f-74ca0dd622ae',
   })
-  @IsUUID()
   departureTerminalId: string;
 
   @ApiProperty({
     example: '86253827-6011-4e63-a98f-74ca0dd62200',
   })
-  @IsUUID()
   departureGateId: string;
 
   @ApiProperty({
     example: '86253827-6011-4e63-a98f-74ca0ed62200',
   })
-  @IsUUID()
   arrivalAirportId: string;
 
   @ApiProperty({
     example: '86253827-6011-4e63-a98f-74ca0ed62b00',
   })
-  @IsUUID()
   arrivalTerminalId: string;
 
   @ApiProperty({
     example: '86253827-6011-4e63-a98f-74aa0ed62b22',
   })
-  @IsUUID()
   arrivalGateId: string;
 }

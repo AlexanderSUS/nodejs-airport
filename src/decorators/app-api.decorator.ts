@@ -1,4 +1,4 @@
-import { applyDecorators } from '@nestjs/common';
+import { Type, applyDecorators } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -11,6 +11,7 @@ import {
 import { BadRequestDto } from 'src/common/dto/bad-request.dto';
 import { InternalServerErrorDto } from 'src/common/dto/internal-server-error.dto';
 import { NotFoundDto } from 'src/common/dto/not-found.dto';
+import { ApiPaginatedResponse } from './api-paginated-response.decorator';
 
 type ApiDecorator = typeof ApiBadRequestResponse;
 
@@ -34,7 +35,7 @@ const AppApiNotFoundResponse = bindApiDecorator(ApiNotFoundResponse, {
   type: NotFoundDto,
 });
 
-export function AppApiOkResponseDecorator(options: ApiResponseOptions) {
+export function AppApiOkResponse(options: ApiResponseOptions) {
   return applyDecorators(
     AppApiBadRequestResponse(),
     AppApiInternalServerErrorResponse(),
@@ -43,18 +44,17 @@ export function AppApiOkResponseDecorator(options: ApiResponseOptions) {
   );
 }
 
-export function AppApiOkResponseWONotFoundExceptionDecorator(
-  options: ApiResponseOptions,
+export function AppApiPaginatedResponse<TModel extends Type<any>>(
+  model: TModel,
 ) {
   return applyDecorators(
     AppApiBadRequestResponse(),
     AppApiInternalServerErrorResponse(),
-    AppApiNotFoundResponse(),
-    ApiOkResponse(options),
+    ApiPaginatedResponse(model),
   );
 }
 
-export function AppApiCreatedResponseDecorator(options: ApiResponseOptions) {
+export function AppApiCreatedResponse(options: ApiResponseOptions) {
   return applyDecorators(
     AppApiBadRequestResponse(),
     AppApiInternalServerErrorResponse(),
@@ -63,7 +63,7 @@ export function AppApiCreatedResponseDecorator(options: ApiResponseOptions) {
   );
 }
 
-export function AppApiNoContentResponseDecorator() {
+export function AppApiNoContentResponse() {
   return applyDecorators(
     AppApiBadRequestResponse(),
     AppApiInternalServerErrorResponse(),
