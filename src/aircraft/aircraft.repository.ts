@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { AircraftModel } from './aircraft.model';
 import { CreateAircraftDto } from './dto/create-aircraft.dto';
@@ -65,7 +65,13 @@ export class AircraftRepository {
       [id],
     );
 
-    return databaseResponse.rows[0];
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
+    return entity;
   }
 
   async update(id: string, updateAircraftDto: UpdateAircraftDto) {
@@ -84,7 +90,13 @@ export class AircraftRepository {
       ],
     );
 
-    return databaseResponse.rows[0];
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
+    return entity;
   }
 
   async delete(id: string) {

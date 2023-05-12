@@ -1,26 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString, Length, Max, Min } from 'class-validator';
+import { AircraftModel } from '../aircraft.model';
 
-export class CreateAircraftDto {
+export class AircraftResponseDto implements AircraftModel {
+  @ApiProperty({
+    example: '7a09d9c5-1038-454c-94a2-3aa15a0a7243',
+  })
+  id: string;
+
   @ApiProperty({
     example: 'Boeing',
   })
-  @Length(1, 255)
-  @IsString()
   make: string;
 
   @ApiProperty({
     example: '737-800',
   })
-  @Length(1, 255)
-  @IsString()
   model: string;
 
   @ApiProperty({
     example: 320,
   })
-  @Max(1000)
-  @Min(1)
-  @IsNumber()
   seats: number;
 }
