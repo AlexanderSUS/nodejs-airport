@@ -1,6 +1,8 @@
 import {
   BadRequestException,
+  HttpStatus,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
@@ -37,12 +39,16 @@ export class AuthService {
       const isPasswordMatch = await bcrypt.compare(password, hashedPassword);
 
       if (!isPasswordMatch) {
-        throw new Error();
+        throw new NotFoundException();
       }
 
       return this.tokenService.getTokens(user.id);
     } catch (err) {
-      throw new BadRequestException('Invalid credentials');
+      if ('status' in err && err.status === HttpStatus.NOT_FOUND) {
+        throw new BadRequestException('Invalid credentials');
+      }
+
+      throw err;
     }
   }
 
