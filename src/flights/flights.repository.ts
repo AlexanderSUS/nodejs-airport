@@ -73,7 +73,7 @@ export class FlightsRepository {
     );
 
     return {
-      total: databaseResponse.rows[0]?.total_count || 0,
+      total: databaseResponse.rows[0]?.total_count || '0',
       data: plainToInstance(FlightsModel, databaseResponse.rows),
     };
   }

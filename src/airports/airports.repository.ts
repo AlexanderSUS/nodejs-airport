@@ -50,7 +50,7 @@ export class AirportsRepository {
     );
 
     return {
-      total: databaseResponse.rows[0]?.total_count || 0,
+      total: databaseResponse.rows[0]?.total_count || '0',
       data: plainToInstance(AirportModel, databaseResponse.rows),
     };
   }

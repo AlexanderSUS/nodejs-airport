@@ -42,7 +42,7 @@ export class GatesRepository {
     );
 
     return {
-      total: databaseResponse.rows[0]?.total_count || 0,
+      total: databaseResponse.rows[0]?.total_count || '0',
       data: plainToInstance(GatesModel, databaseResponse.rows),
     };
   }

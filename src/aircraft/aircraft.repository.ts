@@ -48,7 +48,7 @@ export class AircraftRepository {
     );
 
     return {
-      total: databaseResponse.rows[0]?.total_count || 0,
+      total: databaseResponse.rows[0]?.total_count || '0',
       data: plainToInstance(AircraftModel, databaseResponse.rows),
     };
   }

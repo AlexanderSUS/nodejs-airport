@@ -51,7 +51,7 @@ export class EmployeeRepository {
     );
 
     return {
-      total: databaseResponse.rows[0]?.total_count || 0,
+      total: databaseResponse.rows[0]?.total_count || '0',
       data: plainToInstance(EmployeeModel, databaseResponse.rows),
     };
   }

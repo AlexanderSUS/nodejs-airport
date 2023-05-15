@@ -42,7 +42,7 @@ export class DocumentRepository {
     );
 
     return {
-      total: databaseResponse.rows[0]?.total_count || 0,
+      total: databaseResponse.rows[0]?.total_count || '0',
       data: plainToInstance(DocumentModel, databaseResponse.rows),
     };
   }
