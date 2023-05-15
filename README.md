@@ -80,6 +80,10 @@ docker compose down
 **You can check redis on** <http://localhost:8081>
 
 
+## Swagger
+While app is running you can find swagger documentation at <http://localhost:5000/doc>
+
+
 ## Database
 
 You can find database description in DB.md file.

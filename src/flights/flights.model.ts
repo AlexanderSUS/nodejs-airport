@@ -4,6 +4,10 @@ import { BaseModel } from 'src/common/base.model';
 export class FlightsModel extends BaseModel {
   id: string;
 
+  date: string;
+
+  cost: string;
+
   @Expose({ name: 'aircraft_id' })
   aircraftId: string;
 
