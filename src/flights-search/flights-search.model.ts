@@ -1,6 +1,11 @@
-import { Exclude, Expose, Transform } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
+import { BaseModel } from 'src/common/base.model';
 
-export class FlightsSearchModel {
+export class FlightsSearchModel extends BaseModel {
+  @Expose({ name: 'flight_id' })
+  id: string;
+
+  @Expose({ name: 'flight_date' })
   date: string;
 
   cost: string;
@@ -35,7 +40,4 @@ export class FlightsSearchModel {
 
   @Expose({ name: 'aircraft_model' })
   aircraftModel: string;
-
-  @Exclude()
-  total_count: number;
 }

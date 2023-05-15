@@ -42,7 +42,7 @@ export class PersonRepository {
     );
 
     return {
-      total: databaseResponse.rows[0]?.total_count || 0,
+      total: databaseResponse.rows[0]?.total_count || '0',
       data: plainToInstance(PersonsModel, databaseResponse.rows),
     };
   }

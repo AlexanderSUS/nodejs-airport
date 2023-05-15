@@ -14,6 +14,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
   @ApiProperty({
     example: '2023-05-14',
+    required: false,
   })
   @IsDateString()
   @IsOptional()
@@ -21,6 +22,7 @@ export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
 
   @ApiProperty({
     example: '2023-05-18',
+    required: false,
   })
   @IsDateString()
   @IsOptional()
@@ -28,6 +30,7 @@ export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
 
   @ApiProperty({
     example: 'Paris',
+    required: false,
   })
   @Length(1, 100)
   @IsString()
@@ -36,6 +39,7 @@ export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
 
   @ApiProperty({
     example: 'France',
+    required: false,
   })
   @Length(1, 100)
   @IsString()
@@ -44,6 +48,7 @@ export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
 
   @ApiProperty({
     example: 'Dubai',
+    required: false,
   })
   @Length(1, 100)
   @IsString()
@@ -52,6 +57,7 @@ export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
 
   @ApiProperty({
     example: 'UAE',
+    required: false,
   })
   @Length(1, 100)
   @IsString()
@@ -60,6 +66,7 @@ export class FlightsSearchQueryParamsDto extends BaseQueryParamsDto {
 
   @ApiProperty({
     example: 3,
+    required: false,
   })
   @Max(1000)
   @Min(1)

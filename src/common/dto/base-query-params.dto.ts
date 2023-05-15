@@ -6,7 +6,7 @@ import { DEFAULT_LIMIT, DEFAULT_OFFSET } from '../default-params.const';
 export class BaseQueryParamsDto {
   @ApiProperty({
     required: false,
-    example: 10,
+    example: 0,
   })
   @Min(0)
   @Transform(({ value }) => parseInt(value, 10))
