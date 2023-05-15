@@ -4,6 +4,7 @@ import { PersonsModel } from './persons.model';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { PersonsQueryParamsDto } from './dto/persons-query-params.dto';
 
 @Injectable()
 export class PersonRepository {
@@ -28,12 +29,22 @@ export class PersonRepository {
     return plainToInstance(PersonsModel, databaseResponse.rows[0]);
   }
 
-  async getAll() {
-    const databaseResponse = await this.databaseService.runQuery(`
-      SELECT * FROM person
-    `);
+  async getAll(personsQueryParams: PersonsQueryParamsDto) {
+    const databaseResponse = await this.databaseService.runQuery(
+      `
+        SELECT *
+          ,COUNT(*) OVER() AS total_count 
+        FROM person
+        OFFSET $1
+        LIMIT $2
+      `,
+      [personsQueryParams.offset, personsQueryParams.limit],
+    );
 
-    return plainToInstance(PersonsModel, databaseResponse.rows);
+    return {
+      total: databaseResponse.rows[0]?.total_count || 0,
+      data: plainToInstance(PersonsModel, databaseResponse.rows),
+    };
   }
 
   async getById(id: string) {

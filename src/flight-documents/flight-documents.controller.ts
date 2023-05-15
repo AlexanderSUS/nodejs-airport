@@ -7,10 +7,13 @@ import {
   Delete,
   ParseUUIDPipe,
   Put,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { FlightDocumentsService } from './flight-documents.service';
 import { CreateFlightDocumentDto } from './dto/create-flight-document.dto';
 import { UpdateFlightDocumentDto } from './dto/update-flight-document.dto';
+import { FlightDocumentQueryParamsDto } from './dto/flight-documents-query-params.dto';
 
 @Controller('flight-documents')
 export class FlightDocumentsController {
@@ -24,8 +27,11 @@ export class FlightDocumentsController {
   }
 
   @Get()
-  getAll() {
-    return this.flightDocumentsService.getAll();
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    flightDocumentQueryParams: FlightDocumentQueryParamsDto,
+  ) {
+    return this.flightDocumentsService.getAll(flightDocumentQueryParams);
   }
 
   @Put(':flightId/documents/:documentId')

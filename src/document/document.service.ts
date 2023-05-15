@@ -3,6 +3,7 @@ import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
 import { DocumentRepository } from './document.repository';
 import { PersonService } from 'src/persons/persons.service';
+import { DocumentsQueryParams } from './dto/documents-query-params.dto';
 
 @Injectable()
 export class DocumentService {
@@ -11,12 +12,12 @@ export class DocumentService {
     private readonly personService: PersonService,
   ) {}
 
-  async create(createDocumentDto: CreateDocumentDto) {
+  create(createDocumentDto: CreateDocumentDto) {
     return this.documentRepository.create(createDocumentDto);
   }
 
-  getAll() {
-    return this.documentRepository.getAll();
+  getAll(documentsQueryParams: DocumentsQueryParams) {
+    return this.documentRepository.getAll(documentsQueryParams);
   }
 
   getOne(id: string) {

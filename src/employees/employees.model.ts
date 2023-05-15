@@ -1,6 +1,7 @@
 import { Expose } from 'class-transformer';
+import { BaseModel } from 'src/common/base.model';
 
-export class EmployeeModel {
+export class EmployeeModel extends BaseModel {
   id: string;
 
   @Expose({ name: 'first_name' })

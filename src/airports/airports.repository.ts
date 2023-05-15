@@ -3,6 +3,8 @@ import DatabaseService from 'src/database/database.service';
 import { AirportModel } from './airport.model';
 import { CreateAirportDto } from './dto/create-airport.dto';
 import { UpdateAirportDto } from './dto/update-airport.dto';
+import { AirportsQueryParamsDto } from './dto/airports-query-params.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class AirportsRepository {
@@ -36,12 +38,21 @@ export class AirportsRepository {
     return databaseResponse.rows[0];
   }
 
-  async getAll() {
+  async getAll(airportQueryParams: AirportsQueryParamsDto) {
     const databaseResponse = await this.databaseService.runQuery(
-      `SELECT * FROM airport`,
+      `SELECT * 
+        ,COUNT(*) OVER() AS total_count 
+      FROM airport
+      OFFSET $1
+      LIMIT $2
+      `,
+      [airportQueryParams.offset, airportQueryParams.limit],
     );
 
-    return databaseResponse.rows;
+    return {
+      total: databaseResponse.rows[0]?.total_count || 0,
+      data: plainToInstance(AirportModel, databaseResponse.rows),
+    };
   }
 
   async getById(id: string) {

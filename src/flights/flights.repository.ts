@@ -4,6 +4,7 @@ import { FlightsModel } from './flights.model';
 import { CreateFlightDto } from './dto/create-flight.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdateFlightDto } from './dto/update-flight.dto';
+import { FlightsQueryParamsDto } from './dto/flights-query-params.dto';
 
 @Injectable()
 export class FlightsRepository {
@@ -58,14 +59,23 @@ export class FlightsRepository {
     return plainToInstance(FlightsModel, databaseResponse.rows[0]);
   }
 
-  async getAll() {
+  async getAll(flightsQueryParams: FlightsQueryParamsDto) {
+    console.log(flightsQueryParams);
     const databaseResponse = await this.databaseService.runQuery(
       `
-        SELECT * FROM flight
-      `,
+        SELECT * 
+        ,COUNT(*) OVER() AS total_count 
+        FROM flight
+        OFFSET $1
+        LIMIT $2
+    `,
+      [flightsQueryParams.offset, flightsQueryParams.limit],
     );
 
-    return plainToInstance(FlightsModel, databaseResponse.rows);
+    return {
+      total: databaseResponse.rows[0]?.total_count || 0,
+      data: plainToInstance(FlightsModel, databaseResponse.rows),
+    };
   }
 
   async getById(id: string) {

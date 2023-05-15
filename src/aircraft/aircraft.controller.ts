@@ -9,10 +9,13 @@ import {
   HttpStatus,
   HttpCode,
   Put,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AircraftService } from './aircraft.service';
 import { CreateAircraftDto } from './dto/create-aircraft.dto';
 import { UpdateAircraftDto } from './dto/update-aircraft.dto';
+import { AircraftQueryParamsDto } from './dto/aircraft-query-params.dto';
 
 @Controller('aircraft')
 export class AircraftController {
@@ -24,8 +27,11 @@ export class AircraftController {
   }
 
   @Get()
-  getAll() {
-    return this.aircraftService.getAll();
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    aircraftQueryParams: AircraftQueryParamsDto,
+  ) {
+    return this.aircraftService.getAll(aircraftQueryParams);
   }
 
   @Get(':id')

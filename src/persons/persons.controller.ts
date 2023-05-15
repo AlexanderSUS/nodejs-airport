@@ -7,10 +7,13 @@ import {
   Delete,
   ParseUUIDPipe,
   Put,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PersonService } from './persons.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { PersonsQueryParamsDto } from './dto/persons-query-params.dto';
 
 @Controller('persons')
 export class PersonController {
@@ -22,8 +25,11 @@ export class PersonController {
   }
 
   @Get()
-  getAll() {
-    return this.personService.getAll();
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    personsQueryParams: PersonsQueryParamsDto,
+  ) {
+    return this.personService.getAll(personsQueryParams);
   }
 
   @Get(':id')

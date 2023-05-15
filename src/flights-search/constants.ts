@@ -1,0 +1,1 @@
+export const DEFAULT_MIN_AVAILABLE_SEATS = 1;

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { PersonRepository } from './persons.repository';
+import { PersonsQueryParamsDto } from './dto/persons-query-params.dto';
 
 @Injectable()
 export class PersonService {
@@ -11,8 +12,8 @@ export class PersonService {
     return this.personRepository.create(createPersonDto);
   }
 
-  getAll() {
-    return this.personRepository.getAll();
+  getAll(personsQueryParams: PersonsQueryParamsDto) {
+    return this.personRepository.getAll(personsQueryParams);
   }
 
   getOne(id: string) {

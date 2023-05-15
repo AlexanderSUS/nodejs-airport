@@ -13,6 +13,7 @@ export class FlightsSearchController {
         forbidUnknownValues: true,
         forbidNonWhitelisted: true,
         whitelist: true,
+        transform: true,
       }),
     )
     flightSearchQueryParams: FlightsSearchQueryParamsDto,

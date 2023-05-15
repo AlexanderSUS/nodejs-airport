@@ -4,6 +4,7 @@ import { GatesModel } from './gates.model';
 import { CreateGateDto } from './dto/create-gate.dto';
 import { plainToInstance } from 'class-transformer';
 import { UpdateGateDto } from './dto/update-gate.dto';
+import { GatesQueryParamsDto } from './dto/gates-query-params.dto';
 
 @Injectable()
 export class GatesRepository {
@@ -28,12 +29,22 @@ export class GatesRepository {
     return plainToInstance(GatesModel, databaseResponse.rows[0]);
   }
 
-  async getAll() {
-    const databaseResponse = await this.databaseService.runQuery(`
-      SELECT * FROM gate
-    `);
+  async getAll(gatesQueryParams: GatesQueryParamsDto) {
+    const databaseResponse = await this.databaseService.runQuery(
+      `
+      SELECT *
+        ,COUNT(*) OVER() AS total_count 
+      FROM gate
+      OFFSET $1
+      LIMIT $2
+    `,
+      [gatesQueryParams.offset, gatesQueryParams.limit],
+    );
 
-    return plainToInstance(GatesModel, databaseResponse.rows);
+    return {
+      total: databaseResponse.rows[0]?.total_count || 0,
+      data: plainToInstance(GatesModel, databaseResponse.rows),
+    };
   }
 
   async findOneById(id: string) {

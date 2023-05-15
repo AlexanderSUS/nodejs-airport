@@ -7,10 +7,13 @@ import {
   Delete,
   ParseUUIDPipe,
   Put,
+  Query,
+  ValidationPipe,
 } from '@nestjs/common';
 import { DocumentService } from './document.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { UpdateDocumentDto } from './dto/update-document.dto';
+import { DocumentsQueryParams } from './dto/documents-query-params.dto';
 
 @Controller('documents')
 export class DocumentController {
@@ -22,8 +25,11 @@ export class DocumentController {
   }
 
   @Get()
-  getAll() {
-    return this.documentService.getAll();
+  getAll(
+    @Query(new ValidationPipe({ transform: true }))
+    documentsQueryParams: DocumentsQueryParams,
+  ) {
+    return this.documentService.getAll(documentsQueryParams);
   }
 
   @Get(':id')

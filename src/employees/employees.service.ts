@@ -3,6 +3,7 @@ import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeeRepository } from './employees.repository';
 import * as bcrypt from 'bcrypt';
+import { EmployeesQueryParams } from './dto/employees-query-params.dto';
 
 @Injectable()
 export class EmployeesService {
@@ -12,8 +13,8 @@ export class EmployeesService {
     return this.employeesRepository.create(createEmployeeDto);
   }
 
-  getAll() {
-    return this.employeesRepository.getAll();
+  getAll(employeesQueryParams: EmployeesQueryParams) {
+    return this.employeesRepository.getAll(employeesQueryParams);
   }
 
   findOneById(id: string) {
