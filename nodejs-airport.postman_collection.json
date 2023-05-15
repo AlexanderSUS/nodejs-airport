@@ -10,6 +10,62 @@
 			"name": "Auth",
 			"item": [
 				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const employee = JSON.parse(responseBody);",
+									"",
+									"if (employee) {",
+									"    pm.collectionVariables.set(\"email\", employee.email);",
+									"    pm.collectionVariables.set(\"employeeId\", employee.id)",
+									"}",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Employee has all fields\", () => {",
+									"    pm.expect(employee).to.be.an(\"object\");",
+									"    pm.expect(employee.firstName).to.be.an(\"string\");",
+									"    pm.expect(employee.lastName).to.be.an(\"string\");",
+									"    pm.expect(employee.email).to.be.an(\"string\");",
+									"})",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"email\": \"{{$randomExampleEmail}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Log In",
 					"event": [
 						{
@@ -21,7 +77,17 @@
 									"if (refreshToken && accessToken) {",
 									"  pm.collectionVariables.set(\"refresh\", refreshToken);",
 									"  pm.collectionVariables.set(\"access\", accessToken);",
-									"}"
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.accessToken).to.be.an(\"string\");",
+									"    pm.expect(jsonData.refreshToken).to.be.an(\"string\");",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -32,7 +98,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"test@test.test\",\n    \"password\": \"test1234\"\n}",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -64,7 +130,17 @@
 									"if (refreshToken && accessToken) {",
 									"  pm.collectionVariables.set(\"refresh\", refreshToken);",
 									"  pm.collectionVariables.set(\"access\", accessToken);",
-									"}"
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.accessToken).to.be.an(\"string\");",
+									"    pm.expect(jsonData.refreshToken).to.be.an(\"string\");",
+									"});"
 								],
 								"type": "text/javascript"
 							}
@@ -97,6 +173,19 @@
 				},
 				{
 					"name": "Log out",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -117,33 +206,6 @@
 							"path": [
 								"auth",
 								"logout"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\",\n    \"email\": \"test@test.test\",\n    \"password\": \"test1234\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/auth/register",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"auth",
-								"register"
 							]
 						}
 					},
@@ -169,6 +231,1223 @@
 							"path": [
 								"api",
 								"v1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "aircraft",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aircraft",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aircraft"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"aircraftId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"make\": \"Airbus\",\n    \"model\": \"A330-800\",\n    \"seats\": 400\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/aircraft",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aircraft"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aircraft/{{aircraftId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aircraft",
+								"{{aircraftId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"make\": \"Airbus\",\n    \"model\": \"A330-800\",\n    \"seats\": 300\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/aircraft/{{aircraftId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aircraft",
+								"{{aircraftId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/aircraft/{{aircraftId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"aircraft",
+								"{{aircraftId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "airport",
+			"item": [
+				{
+					"name": "Get all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const [airport] = JSON.parse(responseBody);",
+									"",
+									"if (airport) {",
+									"    pm.collectionVariables.set(\"arrivalAirportId\", airport.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/airports",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"airportId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"iata\": \"bbb\",\n    \"name\": \"Test airport\",\n    \"city\": \"Test city\",\n    \"country\": \"Test country\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/airports",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"airports"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/airports/{{airportId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"airports",
+								"{{airportId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"iata\": \"ccc\",\n    \"name\": \"New test airport\",\n    \"city\": \"New test city\",\n    \"country\": \"New test country\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/airports/{{airportId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"airports",
+								"{{airportId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/airports/{{airportId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"airports",
+								"{{airportId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "terminals",
+			"item": [
+				{
+					"name": "Get all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const terminals = JSON.parse(responseBody);",
+									"",
+									"const arrivalAirportId = pm.collectionVariables.get(\"arrivalAirportId\");",
+									"",
+									"if (terminals && arrivalAirportId) {",
+									"    const arrivalTerminal = terminals.find((terminal) => terminal.airportId === arrivalAirportId)",
+									"    pm.collectionVariables.set(\"arrivalTerminalId\", arrivalTerminal.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/terminals",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"terminals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"terminalId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"A\",\n    \"airportId\": \"{{airportId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/terminals",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"terminals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/terminals/{{terminalId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"terminals",
+								"{{terminalId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"B\",\n    \"airportId\": \"{{airportId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/terminals/{{terminalId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"terminals",
+								"{{terminalId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/terminals/{{terminalId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"terminals",
+								"{{terminalId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "gates",
+			"item": [
+				{
+					"name": "Get all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const gates = JSON.parse(responseBody);",
+									"",
+									"const arrivalTerminalId = pm.collectionVariables.get(\"arrivalTerminalId\");",
+									"",
+									"if (gates && arrivalTerminalId) {",
+									"    const arrivalGate = gates.find((gate) => gate.terminalId === arrivalTerminalId)",
+									"    pm.collectionVariables.set(\"arrivalGateId\", arrivalGate.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/gates",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"gates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"gateId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"number\": \"13\",\n    \"airportId\": \"{{airportId}}\",\n    \"terminalId\": \"{{terminalId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gates",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"gates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/gates/{{gateId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"gates",
+								"{{gateId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"number\": \"B12\",\n    \"airportId\": \"{{airportId}}\",\n    \"terminalId\": \"{{terminalId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/gates/{{gateId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"gates",
+								"{{gateId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/gates/{{gateId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"gates",
+								"{{gateId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "flights",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/flights",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"flightId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2023-05-14\",\n    \"cost\": 40,\n    \"aircraftId\": \"{{aircraftId}}\",\n    \"departureTime\": \"10:00\",\n    \"arrivalTime\": \"15:00\",\n    \"departureAirportId\": \"{{airportId}}\",\n    \"departureTerminalId\": \"{{terminalId}}\",\n    \"departureGateId\": \"{{gateId}}\",\n    \"arrivalAirportId\": \"{{arrivalAirportId}}\",\n    \"arrivalTerminalId\": \"{{arrivalTerminalId}}\",\n    \"arrivalGateId\": \"{{arrivalGateId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/flights",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flights"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/flights/:flightId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flights",
+								":flightId"
+							],
+							"variable": [
+								{
+									"key": "flightId",
+									"value": "{{flightId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2023-05-14\",\n    \"aircraftId\": \"{{aircraftId}}\",\n    \"departureTime\": \"10:00\",\n    \"arrivalTime\": \"18:00\",\n    \"departureAirportId\": \"{{airportId}}\",\n    \"departureTerminalId\": \"{{terminalId}}\",\n    \"departureGateId\": \"{{gateId}}\",\n    \"arrivalAirportId\": \"{{arrivalAirportId}}\",\n    \"arrivalTerminalId\": \"{{arrivalTerminalId}}\",\n    \"arrivalGateId\": \"{{arrivalGateId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/flights/{{flightId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flights",
+								"{{flightId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/flights/{{flightId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flights",
+								"{{flightId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Persons",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/persons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"persons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"personId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"John\",\n    \"lastName\": \"Doe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/persons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"persons"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/persons/{{personId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"persons",
+								"{{personId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Jane\",\n    \"lastName\": \"Doe\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/persons/{{personId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"persons",
+								"{{personId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/persons/{{personId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"persons",
+								"{{personId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Documents",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/documents",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"documentId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"visa\",\n    \"personId\": \"{{personId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/documents",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/documents/{{documentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents",
+								"{{documentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"type\": \"passport\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/documents/{{documentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents",
+								"{{documentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/documents/{{documentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"documents",
+								"{{documentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "flight documents",
+			"item": [
+				{
+					"name": "Get all",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\"d961d1b4-7a4c-4bb1-bb1c-2492631d88993ecc8758-ab93-4b05-8621-7bd5e45e0a5d\""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/flight-documents",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flight-documents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const { id } = JSON.parse(responseBody);",
+									"",
+									"if (id) {",
+									"  pm.collectionVariables.set(\"flight-documentId\", id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"flightId\": \"{{flightId}}\",\n    \"documentId\": \"{{documentId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/flight-documents",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flight-documents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"flightId\": \"{{flightId}}\",\n    \"documentId\": \"{{documentId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/flight-documents/{{flightId}}/documents/{{documentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flight-documents",
+								"{{flightId}}",
+								"documents",
+								"{{documentId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/flight-documents/{{flightId}}/documents/{{documentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flight-documents",
+								"{{flightId}}",
+								"documents",
+								"{{documentId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "flights-search",
+			"item": [
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/flights-search?departure_airport.country=Netherlands&arrival_airport.city=Dubai&start_date=2023-04-27&available_seats=200&end_date=2023-05-01",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"flights-search"
+							],
+							"query": [
+								{
+									"key": "departure_airport.country",
+									"value": "Netherlands"
+								},
+								{
+									"key": "arrival_airport.city",
+									"value": "Dubai"
+								},
+								{
+									"key": "start_date",
+									"value": "2023-04-27"
+								},
+								{
+									"key": "available_seats",
+									"value": "200"
+								},
+								{
+									"key": "end_date",
+									"value": "2023-05-01"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/employees",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/employees/{{employeeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"employees",
+								"{{employeeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const employee = JSON.parse(responseBody);",
+									"",
+									"if (employee) {",
+									"    pm.collectionVariables.set(\"email\", employee.email);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"{{$randomFirstName}}\",\n    \"lastName\": \"{{$randomLastName}}\",\n    \"email\": \"{{$randomExampleEmail}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/employees/{{employeeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"employees",
+								"{{employeeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/employees/{{employeeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"employees",
+								"{{employeeId}}"
 							]
 						}
 					},
@@ -209,6 +1488,59 @@
 		},
 		{
 			"key": "access",
+			"value": ""
+		},
+		{
+			"key": "aircraftId",
+			"value": ""
+		},
+		{
+			"key": "personId",
+			"value": ""
+		},
+		{
+			"key": "documentId",
+			"value": ""
+		},
+		{
+			"key": "airportId",
+			"value": ""
+		},
+		{
+			"key": "terminalId",
+			"value": ""
+		},
+		{
+			"key": "gateId",
+			"value": ""
+		},
+		{
+			"key": "arrivalAirportId",
+			"value": ""
+		},
+		{
+			"key": "arrivalTerminalId",
+			"value": ""
+		},
+		{
+			"key": "arrivalGateId",
+			"value": ""
+		},
+		{
+			"key": "flightId",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "password",
+			"value": "test1234",
+			"type": "string"
+		},
+		{
+			"key": "employeeId",
 			"value": ""
 		}
 	]

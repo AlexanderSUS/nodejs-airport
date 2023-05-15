@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import DatabaseService from 'src/database/database.service';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
-import { EmployeeModel } from './employee.model';
+import { EmployeeModel } from './employees.model';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
@@ -54,6 +54,10 @@ export class EmployeeRepository {
     );
     const [entity] = databaseResponse.rows;
 
+    if (!entity) {
+      throw new NotFoundException();
+    }
+
     return plainToInstance(EmployeeModel, entity);
   }
 
@@ -65,6 +69,11 @@ export class EmployeeRepository {
       [email],
     );
     const [entity] = databaseResponse.rows;
+
+    // TODO: CHECK if this affect on authorization
+    if (!entity) {
+      throw new NotFoundException();
+    }
 
     return plainToInstance(EmployeeModel, entity);
   }
@@ -90,8 +99,19 @@ export class EmployeeRepository {
   }
 
   async delete(id: string) {
-    await this.databaseService.runQuery(`DELETE FROM employee WHERE id=$1`, [
-      id,
-    ]);
+    const databaseResponse = await this.databaseService.runQuery(
+      `
+        DELETE FROM employee 
+        WHERE id=$1
+        RETURNING *
+      `,
+      [id],
+    );
+
+    const [entity] = databaseResponse.rows;
+
+    if (!entity) {
+      throw new NotFoundException();
+    }
   }
 }

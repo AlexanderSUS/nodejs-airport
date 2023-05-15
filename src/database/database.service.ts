@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Pool } from 'pg';
 import { CONNECTION_POOL } from './database.module-definition';
-import { isUniqueViolationError } from './util/isUniqViolationError';
+import { isPgDefinedError } from './util/is-pg-defied-error';
 
 @Injectable()
 class DatabaseService<T> {
@@ -16,7 +16,7 @@ class DatabaseService<T> {
     try {
       return await this.pool.query<T>(query, params);
     } catch (error) {
-      if (isUniqueViolationError(error)) {
+      if (isPgDefinedError(error)) {
         throw new BadRequestException(error.detail);
       }
 

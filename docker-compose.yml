@@ -10,7 +10,7 @@ services:
     ports:
       - ${APP_PORT}:${APP_PORT}
     volumes:
-      - .:/app
+      - ./src:/usr/src/app/src
     env_file: 
     - .env
     depends_on:
@@ -47,8 +47,8 @@ services:
       image: dpage/pgadmin4:7.0
       ports:
         - "8080:80"
-      volumes:
-        - /data/pgadmin:/root/.pgadmin
+      # volumes:
+      #   - /data/pgadmin:/root/.pgadmin
       depends_on: 
         - db
       env_file:
